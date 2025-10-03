@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "Luxe tiny house in een bosrijke omgeving bij zonsondergang",
+      "imageUrl": "https://images.unsplash.com/photo-1697462248416-9671bbbf60ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx0aW55JTIwaG91c2UlMjBleHRlcmlvcnxlbnwwfHx8fDE3NTk0NzA3MjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house exterior"
+    },
+    {
+      "id": "gallery-1",
+      "description": "Modern en licht interieur van een tiny house met een slimme indeling",
+      "imageUrl": "https://images.unsplash.com/photo-1607582544956-a874e6740135?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx0aW55JTIwaG91c2UlMjBpbnRlcmlvcnxlbnwwfHx8fDE3NTk0NzA3MjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house interior"
+    },
+    {
+      "id": "gallery-2",
+      "description": "Compacte, stijlvolle keuken in een tiny house",
+      "imageUrl": "https://images.unsplash.com/photo-1601760561441-16420502c7e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0aW55JTIwaG91c2UlMjBraXRjaGVufGVufDB8fHx8MTc1OTQ3MDcyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house kitchen"
+    },
+    {
+      "id": "gallery-3",
+      "description": "Gezellige slaaploft in een tiny house met een dakraam",
+      "imageUrl": "https://images.unsplash.com/photo-1734599511415-cb4a52aea2fe?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHx0aW55JTIwaG91c2UlMjBiZWRyb29tfGVufDB8fHx8MTc1OTQ3MDcyM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house bedroom"
+    },
+    {
+      "id": "gallery-4",
+      "description": "Buitenkant van een tiny house met een houten veranda",
+      "imageUrl": "https://images.unsplash.com/photo-1719245528771-65da2b4e0e01?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx0aW55JTIwaG91c2UlMjBwb3JjaHxlbnwwfHx8fDE3NTk0NzA3MjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house porch"
+    },
+    {
+      "id": "gallery-5",
+      "description": "Detailopname van de hoogwaardige houten afwerking",
+      "imageUrl": "https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b29kJTIwdGV4dHVyZXxlbnwwfHx8fDE3NTk0MDYzMDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wood texture"
+    },
+    {
+      "id": "gallery-6",
+      "description": "Tiny house in een winterlandschap",
+      "imageUrl": "https://images.unsplash.com/photo-1551927411-95e412943b58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx0aW55JTIwaG91c2UlMjB3aW50ZXJ8ZW58MHx8fHwxNzU5NDcwNzIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tiny house winter"
+    }
+  ]
 }
