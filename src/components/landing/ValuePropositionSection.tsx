@@ -24,7 +24,7 @@ export function ValuePropositionSection() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl">
-            Waarom Tiny Luxe?
+            Waarom Bosz Houses?
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
             De perfecte balans tussen duurzaamheid, luxe en vrijheid.

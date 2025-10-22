@@ -13,7 +13,7 @@ export function GallerySection() {
             Een Kijkje Binnen
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Ontdek het vakmanschap en de sfeer van Tiny Luxe.
+            Ontdek het vakmanschap en de sfeer van Bosz Houses.
           </p>
         </div>
         <div className="mt-16 columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">

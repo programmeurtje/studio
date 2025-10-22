@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Tiny Luxe | Luxe Tiny Houses in Nederland',
+  title: 'Bosz Houses | Luxe Tiny Houses in Nederland',
   description: 'Ontdek de perfecte combinatie van luxe, duurzaamheid en vrijheid. Bezoek onze kijkdagen en vind uw droom tiny house.',
 };
 

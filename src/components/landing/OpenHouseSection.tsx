@@ -19,7 +19,7 @@ export function OpenHouseSection() {
             Kijkdagen
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Kom langs en ervaar Tiny Luxe zelf. Wees welkom op de volgende data.
+            Kom langs en ervaar Bosz Houses zelf. Wees welkom op de volgende data.
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
