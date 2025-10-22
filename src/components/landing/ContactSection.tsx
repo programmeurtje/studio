@@ -1,55 +1,47 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useFormState, useFormStatus } from "react-dom";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
+import { sendEmail } from "@/app/actions";
+import { Label } from "../ui/label";
 
-const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Naam moet minimaal 2 karakters lang zijn.",
-  }),
-  email: z.string().email({
-    message: "Voer een geldig e-mailadres in.",
-  }),
-  message: z.string().min(10, {
-    message: "Bericht moet minimaal 10 karakters lang zijn.",
-  }),
-});
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={pending}>
+      {pending ? "Verzenden..." : "Verstuur Bericht"}
+    </Button>
+  );
+}
 
 export function ContactSection() {
   const { toast } = useToast();
+  
+  const initialState = { message: null, errors: {}, success: false };
+  const [state, dispatch] = useFormState(sendEmail, initialState);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
-  });
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: "Bericht verzonden!",
+        description: "Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.",
+      });
+    } else if (state.message) {
+      toast({
+        variant: "destructive",
+        title: "Oeps! Er is iets misgegaan.",
+        description: state.message,
+      });
+    }
+  }, [state, toast]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    toast({
-      title: "Bericht verzonden!",
-      description: "Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.",
-    });
-    form.reset();
-  }
 
   return (
     <section id="contact" className="py-20 sm:py-32 bg-primary/5">
@@ -65,52 +57,27 @@ export function ContactSection() {
         <div className="mt-16 max-w-xl mx-auto">
           <Card className="border-primary/20">
             <CardContent className="p-8">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Naam</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Uw naam" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Uw e-mailadres" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Bericht</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Uw vraag of opmerking" {...field} rows={6} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                    Verstuur Bericht
-                  </Button>
-                </form>
-              </Form>
+              <form action={dispatch} className="space-y-6">
+                 <div className="space-y-2">
+                    <Label htmlFor="name">Naam</Label>
+                    <Input id="name" name="name" placeholder="Uw naam" />
+                    {state.errors?.name && <p className="text-sm font-medium text-destructive">{state.errors.name}</p>}
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input id="email" name="email" type="email" placeholder="Uw e-mailadres" />
+                    {state.errors?.email && <p className="text-sm font-medium text-destructive">{state.errors.email}</p>}
+                </div>
+                
+                <div className="space-y-2">
+                    <Label htmlFor="message">Bericht</Label>
+                    <Textarea id="message" name="message" placeholder="Uw vraag of opmerking" rows={6} />
+                    {state.errors?.message && <p className="text-sm font-medium text-destructive">{state.errors.message}</p>}
+                </div>
+                
+                <SubmitButton />
+              </form>
             </CardContent>
           </Card>
         </div>
