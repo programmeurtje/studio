@@ -2,12 +2,12 @@ import { CalendarDays } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 const openHouseDates = [
-  { month: 'November 2024', days: 'Vrijdag 1 & Zaterdag 2' },
-  { month: 'December 2024', days: 'Vrijdag 6 & Zaterdag 7' },
-  { month: 'Januari 2025', days: 'Vrijdag 3 & Zaterdag 4' },
-  { month: 'Februari 2025', days: 'Vrijdag 7 & Zaterdag 8' },
-  { month: 'Maart 2025', days: 'Vrijdag 7 & Zaterdag 8' },
-  { month: 'April 2025', days: 'Vrijdag 4 & Zaterdag 5' },
+  { month: 'November 2025', days: 'Vrijdag 1 & Zaterdag 2' },
+  { month: 'December 2025', days: 'Vrijdag 6 & Zaterdag 7' },
+  { month: 'Januari 2026', days: 'Vrijdag 3 & Zaterdag 4' },
+  { month: 'Februari 2026', days: 'Vrijdag 7 & Zaterdag 8' },
+  { month: 'Maart 2026', days: 'Vrijdag 7 & Zaterdag 8' },
+  { month: 'April 2026', days: 'Vrijdag 4 & Zaterdag 5' },
 ];
 
 export function OpenHouseSection() {
