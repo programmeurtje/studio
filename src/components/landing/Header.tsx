@@ -11,15 +11,15 @@ export function Header() {
           <Image 
             src="/logo.png" 
             alt="Bosz Houses Logo" 
-            width={40} 
-            height={40}
-            className="h-10 w-10"
+            width={48} 
+            height={48}
+            className="h-12 w-12"
             priority
           />
           <span className="text-2xl font-headline font-bold text-primary">Bosz Houses</span>
         </Link>
         <nav>
-          <Link href="#contact" className="font-body font-medium text-foreground transition-colors hover:text-primary">
+          <Link href="#contact" className="font-headline font-bold text-lg text-primary transition-opacity hover:opacity-80">
             Contact
           </Link>
         </nav>
