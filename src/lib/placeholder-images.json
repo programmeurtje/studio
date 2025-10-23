@@ -8,39 +8,39 @@
     },
     {
       "id": "gallery-1",
-      "description": "Modern en licht interieur van een Bosz House",
+      "description": "Licht en modern interieur van een Bosz House",
       "imageUrl": "/images/gallery-1.jpg",
       "imageHint": "tiny house interior"
     },
     {
       "id": "gallery-2",
-      "description": "Compacte en stijlvolle keuken in een Bosz House",
+      "description": "Stijlvol interieur met houten details in een Bosz House",
       "imageUrl": "/images/gallery-2.jpg",
-      "imageHint": "tiny house kitchen"
+      "imageHint": "house interior"
     },
     {
       "id": "gallery-3",
-      "description": "Gezellige slaaploft in een tiny house van Bosz Houses",
+      "description": "Een Bosz House tiny house in een rustige, bosrijke omgeving",
       "imageUrl": "/images/gallery-3.jpg",
-      "imageHint": "tiny house bedroom"
+      "imageHint": "tiny house forest"
     },
     {
       "id": "gallery-4",
-      "description": "Houten veranda van een Bosz House in de natuur",
+      "description": "Ruimtelijk en helder interieur van een luxe tiny house",
       "imageUrl": "/images/gallery-4.jpg",
-      "imageHint": "tiny house porch"
+      "imageHint": "modern interior"
     },
     {
       "id": "gallery-5",
-      "description": "Detailopname van de duurzame houten afwerking van een Bosz House",
+      "description": "Bosz House in een achtertuin-setting",
       "imageUrl": "/images/gallery-5.jpg",
-      "imageHint": "wood texture"
+      "imageHint": "tiny house backyard"
     },
     {
       "id": "gallery-6",
-      "description": "Een Bosz House tiny house in een rustige, winterse omgeving",
+      "description": "Een Bosz House tiny house in een berglandschap",
       "imageUrl": "/images/gallery-6.jpg",
-      "imageHint": "tiny house winter"
+      "imageHint": "tiny house mountains"
     }
   ]
 }
