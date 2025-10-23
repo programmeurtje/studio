@@ -11,9 +11,9 @@ export function Header() {
           <Image 
             src="/logo.png" 
             alt="Bosz Houses Logo" 
-            width={60} 
-            height={60}
-            className="h-16 w-16"
+            width={72} 
+            height={72}
+            className="h-[72px] w-[72px]"
             priority
           />
           <span className="text-2xl font-headline font-bold text-primary">Bosz Houses</span>
