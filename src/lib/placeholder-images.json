@@ -3,7 +3,7 @@
     {
       "id": "hero",
       "description": "Luxe tiny house van Bosz Houses in een bosrijke omgeving",
-      "imageUrl": "/images/hero-background.png",
+      "imageUrl": "/images/hero-background.webp",
       "imageHint": "tiny house exterior"
     },
     {
@@ -32,21 +32,21 @@
     },
     {
       "id": "gallery-5",
-      "description": "Sfeer impressie van huisje in achtertuin",
-      "imageUrl": "/images/gallery-5.jpeg",
-      "imageHint": "tiny house backyard"
-    },
-    {
-      "id": "gallery-6",
       "description": "Sfeer impresse van huisje in bergen",
-      "imageUrl": "/images/gallery-6.jpeg",
+      "imageUrl": "/images/gallery-5.jpeg",
       "imageHint": "tiny house mountains"
     },
     {
-      "id": "gallery-7",
+      "id": "gallery-6",
       "description": "Bouwtekening tiny house",
-      "imageUrl": "/images/gallery-7.jpeg?v=2",
+      "imageUrl": "/images/gallery-6.jpeg",
       "imageHint": "tiny house sketch"
+    },
+    {
+      "id": "gallery-7",
+      "description": "Sfeer impressie van huisje in achtertuin",
+      "imageUrl": "/images/gallery-7.jpeg",
+      "imageHint": "tiny house backyard"
     },
     {
       "id": "gallery-8",

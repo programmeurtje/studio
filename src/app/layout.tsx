@@ -5,6 +5,9 @@ import { Toaster } from "@/components/ui/toaster";
 export const metadata: Metadata = {
   title: 'Bosz Houses | Luxe Tiny Houses in Nederland',
   description: 'Ontdek de perfecte combinatie van luxe, duurzaamheid en vrijheid. Bezoek onze kijkdagen en vind uw droom tiny house.',
+  icons: {
+    icon: "/favicon.ico",
+  }
 };
 
 export default function RootLayout({
