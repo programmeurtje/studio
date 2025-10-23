@@ -1,6 +1,9 @@
-'use server'
+'use server';
 
+import { Resend } from 'resend';
 import { z } from 'zod';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -42,20 +45,33 @@ export async function sendEmail(prevState: State, formData: FormData): Promise<S
 
     const { name, email, message } = validatedFields.data;
 
+    // Check if RESEND_API_KEY is available
+    if (!process.env.RESEND_API_KEY) {
+        console.error("RESEND_API_KEY is not set. Email not sent.");
+        return { 
+            success: false, 
+            message: 'De e-mailconfiguratie is nog niet voltooid. Neem rechtstreeks contact op.' 
+        };
+    }
+
     try {
-        console.log("--- Contact Form Submission ---");
-        console.log("Name:", name);
-        console.log("Email:", email);
-        console.log("Message:", message);
-        console.log("-----------------------------");
-        
-        // Hier zou de logica komen om een e-mail te sturen.
-        // Omdat er nog geen e-mailservice is geconfigureerd,
-        // loggen we de data alleen op de server.
+        await resend.emails.send({
+            from: 'contact@boszhouses.nl', // This must be a verified domain in Resend
+            to: 'info@rwzijlstra.nl',
+            subject: `Nieuw bericht van ${name} via Bosz Houses website`,
+            reply_to: email,
+            html: `
+              <p><strong>Naam:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Bericht:</strong></p>
+              <p>${message}</p>
+            `,
+        });
 
         return { success: true, message: 'Bericht succesvol verzonden!' };
 
     } catch (e) {
-        return { success: false, message: 'Er is een onverwachte fout opgetreden.' };
+        console.error(e);
+        return { success: false, message: 'Er is een onverwachte fout opgetreden bij het versturen van de e-mail.' };
     }
 }
