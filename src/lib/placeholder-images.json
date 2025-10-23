@@ -3,7 +3,7 @@
     {
       "id": "hero",
       "description": "Luxe tiny house van Bosz Houses in een bosrijke omgeving",
-      "imageUrl": "/images/hero-background.jpeg",
+      "imageUrl": "/images/hero-background.png",
       "imageHint": "tiny house exterior"
     },
     {
@@ -27,7 +27,7 @@
     {
       "id": "gallery-4",
       "description": "Ruimtelijk en helder interieur van een luxe tiny house",
-      "imageUrl": "https://images.unsplash.com/photo-1646987916641-1f3c8992daa2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtb2Rlcm4lMjBpbnRlcmlvcnxlbnwwfHx8fDE3NjEwODY3Nzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "/images/gallery-4.jpeg",
       "imageHint": "modern interior"
     },
     {
@@ -44,21 +44,15 @@
     },
     {
       "id": "gallery-7",
-      "description": "De bouw van een duurzaam Bosz House",
-      "imageUrl": "/images/gallery-7.jpeg",
-      "imageHint": "house construction"
+      "description": "Bouwtekening tiny house",
+      "imageUrl": "/images/gallery-7.jpeg?v=2",
+      "imageHint": "tiny house sketch"
     },
     {
       "id": "gallery-8",
-      "description": "Nog een sfeerimpressie",
-      "imageUrl": "https://images.unsplash.com/photo-1611161113195-316bff5c60ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxob3VzZSUyMGxpZmVzdHlsZXxlbnwwfHx8fDE3NjEyMDUwNDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "house lifestyle"
-    },
-    {
-      "id": "gallery-9",
-      "description": "Detail van het interieur",
-      "imageUrl": "https://images.unsplash.com/photo-1670410860914-1ddd3e884cf2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxpbnRlcmlvciUyMGRldGFpbHxlbnwwfHx8fDE3NjExMjE0MTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "interior detail"
+      "description": "Bouwen van tiny house",
+      "imageUrl": "/images/gallery-8.jpeg",
+      "imageHint": "tiny house construction"
     }
   ]
 }
