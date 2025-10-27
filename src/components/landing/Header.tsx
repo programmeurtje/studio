@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { Button } from '../ui/button';
 
 export function Header() {
   return (
@@ -18,7 +19,15 @@ export function Header() {
           />
           <span className="text-2xl font-headline font-bold text-primary">Bosz Houses</span>
         </Link>
-        <nav>
+        <nav className="flex items-center gap-4 md:gap-6">
+          <Link 
+            href="/brochure.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="font-headline font-bold text-lg text-primary transition-opacity hover:opacity-80"
+          >
+            Brochure
+          </Link>
           <Link href="#contact" className="font-headline font-bold text-lg text-primary transition-opacity hover:opacity-80">
             Contact
           </Link>
