@@ -27,8 +27,8 @@ const openHouseDates: OpenHouseDate[] = [
 ];
 
 const location = {
-  address: "Bovenweg 71, 8085 SG Doornspijk, Nederland",
-  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Bovenweg+71,+8085+SG+Doornspijk,+Nederland"
+  address: "Daniël Goedkoopstraat 30, 1349 GJ Almere, Nederland",
+  googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Daniël+Goedkoopstraat+30,+1349+GJ+Almere,+Nederland"
 };
 
 export function OpenHouseSection() {

@@ -21,10 +21,10 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 p-4 max-w-4xl">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight text-white">
-          Grootse Dromen, Compact Wonen
+        Built by hands. Shaped by nature.
         </h1>
         <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-neutral-200 font-body">
-          Ervaar de ultieme vrijheid met onze luxe, duurzame tiny houses. Perfectie in elk detail.
+          Ervaar de ultieme vrijheid met onze luxe, duurzame Bosz houses. Perfectie in elk detail.
         </p>
         <div className="mt-8 flex justify-center">
            <Button asChild size="lg" className="bg-primary text-primary-foreground font-bold hover:bg-primary/90">

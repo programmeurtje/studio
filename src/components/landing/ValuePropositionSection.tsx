@@ -4,17 +4,18 @@ const features = [
   {
     icon: <Leaf className="h-8 w-8 text-primary" />,
     title: 'Duurzaam Leven',
-    description: 'Onze tiny houses zijn gebouwd met milieuvriendelijke materialen en ontworpen voor een minimale ecologische voetafdruk.',
+    description: 'Elke Bosz Residence wordt gebouwd met hoogwaardige, milieuvriendelijke materialen en een minimale ecologische voetafdruk. Ontworpen voor de toekomst, met respect voor mens en natuur.',
   },
   {
     icon: <Gem className="h-8 w-8 text-primary" />,
-    title: 'Betaalbare Luxe',
-    description: 'Geniet van hoogwaardige afwerkingen en slim design dat luxe en comfort combineert zonder het hoge prijskaartje.',
+    title: 'Luxe & Design',
+    description: 'Onze residences combineren architecturaal vakmanschap met pure elegantie. Compact van formaat, groots in afwerking — perfectie in elk detail.',
+    
   },
   {
     icon: <Bird className="h-8 w-8 text-primary" />,
-    title: 'Ultieme Vrijheid',
-    description: 'Leef waar je wilt, wanneer je wilt. Onze tiny houses bieden de flexibiliteit om je leven op jouw voorwaarden in te richten.',
+    title: 'Vrijheid Zonder Grenzen',
+    description: 'Volledig prefab geproduceerd in het buitenland en binnen vier tot zes transportbewegingen geplaatst. Daardoor is de impact op de omgeving minimaal en hebben de nieuwe stikstofregels géén invloed op de realisatie.',
   },
 ];
 
