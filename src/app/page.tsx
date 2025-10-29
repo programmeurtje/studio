@@ -1,3 +1,5 @@
+"use client";
+
 import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { ValuePropositionSection } from '@/components/landing/ValuePropositionSection';
@@ -19,9 +21,7 @@ export default function Home() {
         <FadeIn>
           <GallerySection />
         </FadeIn>
-        <FadeIn>
-          <OpenHouseSection />
-        </FadeIn>
+        <OpenHouseSection />
         <FadeIn>
           <ContactSection />
         </FadeIn>

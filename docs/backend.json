@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "OpenHouseDate": {
+      "title": "Open House Date",
+      "description": "Represents a scheduled open house date.",
+      "type": "object",
+      "properties": {
+        "month": {
+          "type": "string",
+          "description": "The month of the open house (e.g., 'November 2025')."
+        },
+        "days": {
+          "type": "string",
+          "description": "The specific days of the open house (e.g., 'Vrijdag 1 & Zaterdag 2')."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the date was added."
+        }
+      },
+      "required": ["month", "days", "createdAt"]
+    },
+    "PageView": {
+      "title": "Page View",
+      "description": "Represents a single page view event.",
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "The path of the page that was viewed (e.g., '/')."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp of the page view."
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "The user agent of the visitor."
+        }
+      },
+      "required": ["path", "timestamp"]
+    }
+  },
+  "auth": {
+    "providers": ["password"]
+  },
+  "firestore": {
+    "/open_house_dates/{dateId}": {
+      "schema": {
+        "$ref": "#/entities/OpenHouseDate"
+      },
+      "description": "Stores the dates for open house events."
+    },
+    "/page_views/{viewId}": {
+      "schema": {
+        "$ref": "#/entities/PageView"
+      },
+      "description": "Stores page view events for simple analytics."
+    }
+  }
+}
