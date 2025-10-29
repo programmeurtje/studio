@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, MapPin } from 'lucide-react';
+import { CalendarDays, MapPin, CalendarPlus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '../ui/button';
 
@@ -33,7 +33,7 @@ export function OpenHouseSection() {
             Kijkdagen
           </h2>
           <p className="mt-4 text-lg leading-8 text-muted-foreground">
-            Kom langs en ervaar Bosz Houses zelf. Hieronder vindt u de geplande data en onze bezoeklocatie.
+            Kom langs en ervaar Bosz Houses zelf. Hieronder vindt u de geplande data en onze bezoeklocatie. U kunt ook een privé afspraak inplannen.
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -54,15 +54,32 @@ export function OpenHouseSection() {
             </Card>
           ))}
         </div>
+
+        <div className="mt-16 max-w-xl mx-auto text-center">
+            <h3 className="text-2xl font-headline font-bold text-primary">Liever een Privé Afspraak?</h3>
+            <p className="mt-2 text-muted-foreground">
+              Komt een van de bovenstaande data niet uit? Plan dan eenvoudig een privé bezichtiging op een moment dat u het beste past.
+            </p>
+            <div className="flex flex-col items-center gap-4 py-4 mt-2">
+                <Button asChild className="w-full max-w-xs mt-2 bg-accent text-accent-foreground hover:bg-accent/90">
+                    {/* BELANGRIJK: Vervang de onderstaande URL door uw eigen Google Calendar afspraaklink */}
+                    <a href="YOUR_GOOGLE_CALENDAR_APPOINTMENT_LINK" target="_blank" rel="noopener noreferrer">
+                        <CalendarPlus className="mr-2 h-5 w-5" />
+                        Plan een Privé Afspraak
+                    </a>
+                </Button>
+            </div>
+        </div>
+
         <div className="mt-16 max-w-xl mx-auto text-center">
             <h3 className="text-2xl font-headline font-bold text-primary">Bezoeklocatie</h3>
             <div className="flex flex-col items-center gap-4 py-4 mt-4">
                 <div className="flex items-start gap-4">
-                <MapPin className="h-6 w-6 text-primary mt-1" />
-                <div>
-                    <p className="font-semibold text-foreground text-left">Adres:</p>
-                    <p className="text-muted-foreground text-left">{location.address}</p>
-                </div>
+                  <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                  <div className="text-left">
+                      <p className="font-semibold text-foreground">Adres:</p>
+                      <p className="text-muted-foreground">{location.address}</p>
+                  </div>
                 </div>
                 <Button asChild className="w-full max-w-xs mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
                 <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer">
