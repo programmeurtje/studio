@@ -10,12 +10,12 @@ type OpenHouseDate = {
 };
 
 const openHouseDates: OpenHouseDate[] = [
-  { month: 'Oktober / November 2025', days: 'Vrijdag 31 & Zaterdag 1' },
-  { month: 'December 2025', days: 'Vrijdag 5 & Zaterdag 6' },
-  { month: 'Januari 2026', days: 'Vrijdag 2 & Zaterdag 3' },
-  { month: 'Februari 2026', days: 'Vrijdag 6 & Zaterdag 7' },
-  { month: 'Maart 2026', days: 'Vrijdag 6 & Zaterdag 7' },
-  { month: 'April 2026', days: 'Vrijdag 3 & Zaterdag 4' },
+  { month: 'November 2025', days: 'Vrijdag 31 oktober & Zaterdag 1 november' },
+  { month: 'December 2025', days: 'Vrijdag 5 december & Zaterdag 6 december' },
+  { month: 'Januari 2026', days: 'Vrijdag 2 januari & Zaterdag 3 januari' },
+  { month: 'Februari 2026', days: 'Vrijdag 6 februari & Zaterdag 7 februari' },
+  { month: 'Maart 2026', days: 'Vrijdag 6 maart & Zaterdag 7 maart' },
+  { month: 'April 2026', days: 'Vrijdag 3 april & Zaterdag 4 april' },
 ];
 
 const location = {
