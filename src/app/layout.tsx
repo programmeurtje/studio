@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import { Analytics } from '@/components/Analytics';
 
 export const metadata: Metadata = {
   title: 'Bosz Houses | Luxe Tiny Houses in Nederland',
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="font-body bg-background text-foreground antialiased">
         {children}
         <Toaster />
+        <Analytics />
       </body>
     </html>
   );
