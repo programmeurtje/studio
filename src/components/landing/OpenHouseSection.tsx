@@ -60,8 +60,8 @@ export function OpenHouseSection() {
                 <div className="flex items-start gap-4">
                 <MapPin className="h-6 w-6 text-primary mt-1" />
                 <div>
-                    <p className="font-semibold text-foreground">Adres:</p>
-                    <p className="text-muted-foreground">{location.address}</p>
+                    <p className="font-semibold text-foreground text-left">Adres:</p>
+                    <p className="text-muted-foreground text-left">{location.address}</p>
                 </div>
                 </div>
                 <Button asChild className="w-full max-w-xs mt-4 bg-primary text-primary-foreground hover:bg-primary/90">
