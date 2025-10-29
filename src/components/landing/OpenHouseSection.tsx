@@ -61,7 +61,7 @@ export function OpenHouseSection() {
               Komt een van de bovenstaande data niet uit? Plan dan eenvoudig een privé bezichtiging op een moment dat u het beste past.
             </p>
             <div className="flex flex-col items-center gap-4 py-4 mt-2">
-                <Button asChild className="w-full max-w-xs mt-2 bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button asChild className="w-full max-w-xs mt-2 bg-primary text-primary-foreground hover:bg-primary/90">
                     {/* BELANGRIJK: Vervang de onderstaande URL door uw eigen Google Calendar afspraaklink */}
                     <a href="YOUR_GOOGLE_CALENDAR_APPOINTMENT_LINK" target="_blank" rel="noopener noreferrer">
                         <CalendarPlus className="mr-2 h-5 w-5" />
