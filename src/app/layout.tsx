@@ -1,7 +1,8 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import { Analytics } from '@/components/Analytics';
+import Script from 'next/script';
+import { GoogleAnalyticsTracker } from './page';
 
 export const metadata: Metadata = {
   title: 'Bosz Houses | Luxe Tiny Houses in Nederland',
@@ -16,17 +17,41 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const measurementId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
+
   return (
     <html lang="nl" className="dark scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+        {measurementId && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config','${measurementId}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className="font-body bg-background text-foreground antialiased">
         {children}
         <Toaster />
-        <Analytics />
+        <GoogleAnalyticsTracker />
       </body>
     </html>
   );
