@@ -36,6 +36,7 @@ export function OpenHouseSection() {
             Kom langs en ervaar Bosz Houses zelf. Hieronder vindt u de geplande data en onze bezoeklocatie. U kunt ook een privé afspraak inplannen.
           </p>
         </div>
+        
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {openHouseDates.map((date) => (
             <Card 
@@ -62,8 +63,7 @@ export function OpenHouseSection() {
             </p>
             <div className="flex flex-col items-center gap-4 py-4 mt-2">
                 <Button asChild className="w-full max-w-xs mt-2 bg-primary text-primary-foreground hover:bg-primary/90">
-                    {/* BELANGRIJK: Vervang de onderstaande URL door uw eigen Google Calendar afspraaklink */}
-                    <a href="YOUR_GOOGLE_CALENDAR_APPOINTMENT_LINK" target="_blank" rel="noopener noreferrer">
+                    <a href="https://calendar.app.google/ynjpNY3FdYY89Fqb6" target="_blank" rel="noopener noreferrer">
                         <CalendarPlus className="mr-2 h-5 w-5" />
                         Plan een Privé Afspraak
                     </a>
