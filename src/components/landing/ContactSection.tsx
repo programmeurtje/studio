@@ -43,9 +43,7 @@ export function ContactSection() {
       return;
     }
     
-    // **BELANGRIJK**: Vervang de URL hieronder met uw eigen Formspree endpoint URL.
-    // U kunt deze vinden in de 'Integration' tab van uw Formspree formulier dashboard.
-    const formspreeEndpoint = "https://formspree.io/f/YOUR_FORM_ID";
+    const formspreeEndpoint = "https://formspree.io/f/meorbbed";
 
     try {
       const response = await fetch(formspreeEndpoint, {
