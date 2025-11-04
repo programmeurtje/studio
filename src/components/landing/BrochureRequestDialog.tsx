@@ -44,9 +44,7 @@ export function BrochureRequestDialog() {
 
     setPending(true);
 
-    // **BELANGRIJK**: Maak een nieuw Formspree formulier aan voor de brochure
-    // en vervang de URL hieronder met uw eigen Formspree endpoint URL.
-    const formspreeEndpoint = "https://formspree.io/f/YOUR_NEW_FORM_ID_FOR_BROCHURE";
+    const formspreeEndpoint = "https://formspree.io/f/xzzklldg";
 
     const formData = new FormData();
     formData.append('email', email);
@@ -64,7 +62,7 @@ export function BrochureRequestDialog() {
       if (response.ok) {
         toast({
           title: "Aanvraag verzonden!",
-          description: "Bedankt! U ontvangt de brochure binnen enkele minuten in uw mailbox.",
+          description: "Bedankt voor uw aanvraag! U ontvangt de brochure zo spoedig mogelijk in uw mailbox.",
         });
         setEmail('');
         setOpen(false); // Close the dialog on success
@@ -93,7 +91,7 @@ export function BrochureRequestDialog() {
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-primary">Ontvang de Brochure</DialogTitle>
           <DialogDescription>
-            Laat uw e-mailadres achter en ontvang de brochure direct in uw mailbox.
+            Laat uw e-mailadres achter en wij sturen u de brochure per e-mail toe.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
