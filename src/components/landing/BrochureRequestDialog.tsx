@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -94,7 +93,7 @@ export function BrochureRequestDialog() {
             Laat uw e-mailadres achter en wij sturen u de brochure per e-mail toe.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-2 pt-4">
+        <form onSubmit={handleSubmit} className="space-y-4 pt-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
               E-mail
@@ -109,16 +108,16 @@ export function BrochureRequestDialog() {
               className="col-span-3"
             />
           </div>
-           <div className="text-right pr-1">
-             <button type="button" onClick={handleDirectDownload} className="text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors">
-                Nee bedankt, direct downloaden
-             </button>
-           </div>
-          {error && <p className="col-span-4 text-sm font-medium text-destructive text-center pt-2">{error}</p>}
-          <div className="pt-4">
+          {error && <p className="col-span-4 text-sm font-medium text-destructive text-center">{error}</p>}
+          <div className="space-y-1">
             <Button type="submit" disabled={pending} className="w-full">
                 {pending ? "Verzenden..." : "Verstuur naar mijn e-mail"}
             </Button>
+            <div className="text-right pr-1">
+              <button type="button" onClick={handleDirectDownload} className="text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors">
+                  Nee bedankt, direct downloaden
+              </button>
+            </div>
           </div>
         </form>
       </DialogContent>
