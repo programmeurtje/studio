@@ -94,7 +94,7 @@ export function BrochureRequestDialog() {
             Laat uw e-mailadres achter en wij sturen u de brochure per e-mail toe.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="space-y-2 pt-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
               E-mail
@@ -109,16 +109,18 @@ export function BrochureRequestDialog() {
               className="col-span-3"
             />
           </div>
-          {error && <p className="col-span-4 text-sm font-medium text-destructive text-center">{error}</p>}
-          <Button type="submit" disabled={pending}>
-            {pending ? "Verzenden..." : "Verstuur naar mijn e-mail"}
-          </Button>
-        </form>
-        <DialogFooter className="sm:justify-center">
-            <Button variant="link" size="sm" className="text-xs text-muted-foreground h-auto" onClick={handleDirectDownload}>
+           <div className="text-right pr-1">
+             <button type="button" onClick={handleDirectDownload} className="text-[11px] text-muted-foreground/50 hover:text-muted-foreground/80 transition-colors">
                 Nee bedankt, direct downloaden
+             </button>
+           </div>
+          {error && <p className="col-span-4 text-sm font-medium text-destructive text-center pt-2">{error}</p>}
+          <div className="pt-4">
+            <Button type="submit" disabled={pending} className="w-full">
+                {pending ? "Verzenden..." : "Verstuur naar mijn e-mail"}
             </Button>
-        </DialogFooter>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
