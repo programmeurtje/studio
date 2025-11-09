@@ -15,7 +15,7 @@ const features = [
   {
     icon: <Bird className="h-8 w-8 text-primary" />,
     title: 'Vrijheid Zonder Grenzen',
-    description: 'Volledig prefab geproduceerd in het buitenland en binnen vier tot zes transportbewegingen geplaatst. Daardoor is de impact op de omgeving minimaal en hebben de nieuwe stikstofregels géén invloed op de realisatie.',
+    description: 'Met onze efficiënte prefab-productie en plaatsing zijn we operationeel in heel Nederland, België en Duitsland. De impact op de omgeving is minimaal en de nieuwe stikstofregels hebben géén invloed op de realisatie.',
   },
 ];
 
