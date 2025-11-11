@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import Script from 'next/script';
-import { GoogleAnalyticsTracker } from './page';
+import { GoogleAnalyticsTracker } from '@/components/GoogleAnalyticsTracker';
 
 export const metadata: Metadata = {
   title: 'Bosz Houses | Luxe Tiny Houses in Nederland',
@@ -51,7 +51,7 @@ export default function RootLayout({
       <body className="font-body bg-background text-foreground antialiased">
         {children}
         <Toaster />
-        <GoogleAnalyticsTracker />
+        {measurementId && <GoogleAnalyticsTracker />}
       </body>
     </html>
   );
