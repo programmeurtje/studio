@@ -12,3 +12,13 @@ if (!admin.apps.length) {
 
 export const adminAuth = admin.auth();
 export const adminDb = admin.firestore();
+
+// Function to set the admin custom claim
+export async function setAdminClaim(uid: string) {
+    try {
+        await adminAuth.setCustomUserClaims(uid, { admin: true });
+        console.log(`Custom claim 'admin' set for UID: ${uid}`);
+    } catch (error) {
+        console.error("Error setting custom claim:", error);
+    }
+}

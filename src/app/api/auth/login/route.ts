@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { adminAuth } from '@/lib/firebase-admin';
+import { adminAuth, setAdminClaim } from '@/lib/firebase-admin';
 import { cookies } from 'next/headers';
 
 export async function POST(request: NextRequest) {
@@ -10,6 +10,16 @@ export async function POST(request: NextRequest) {
     if (!idToken) {
       return new NextResponse(JSON.stringify({ error: 'ID token is required' }), { status: 400 });
     }
+    
+    const decodedToken = await adminAuth.verifyIdToken(idToken);
+    const user = await adminAuth.getUser(decodedToken.uid);
+
+    // One-time setup: if the user is the designated admin, set the custom claim
+    // We check if the claim is already set to avoid doing this on every login.
+    if (user.email === 'admin@boszhouses.nl' && user.customClaims?.admin !== true) {
+        await setAdminClaim(user.uid);
+    }
+
 
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
