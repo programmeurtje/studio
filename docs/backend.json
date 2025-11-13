@@ -41,6 +41,41 @@
         }
       },
       "required": ["path", "timestamp"]
+    },
+    "GalleryImage": {
+        "title": "Gallery Image",
+        "description": "An image displayed in the website gallery.",
+        "type": "object",
+        "properties": {
+            "imageUrl": { "type": "string", "format": "uri" },
+            "description": { "type": "string" },
+            "imageHint": { "type": "string" },
+            "order": { "type": "number" }
+        },
+        "required": ["imageUrl", "description", "order"]
+    },
+    "ValueProposition": {
+        "title": "Value Proposition",
+        "description": "A feature or value proposition item.",
+        "type": "object",
+        "properties": {
+            "icon": { "type": "string", "enum": ["Leaf", "Gem", "Bird"] },
+            "title": { "type": "string" },
+            "description": { "type": "string" },
+            "order": { "type": "number" }
+        },
+        "required": ["icon", "title", "description", "order"]
+    },
+    "HeroContent": {
+        "title": "Hero Content",
+        "description": "Content for the main hero section.",
+        "type": "object",
+        "properties": {
+            "title": { "type": "string" },
+            "subtitle": { "type": "string" },
+            "imageUrl": { "type": "string", "format": "uri" }
+        },
+        "required": ["title", "subtitle", "imageUrl"]
     }
   },
   "auth": {
@@ -48,16 +83,24 @@
   },
   "firestore": {
     "/open_house_dates/{dateId}": {
-      "schema": {
-        "$ref": "#/entities/OpenHouseDate"
-      },
+      "schema": { "$ref": "#/entities/OpenHouseDate" },
       "description": "Stores the dates for open house events."
     },
     "/page_views/{viewId}": {
-      "schema": {
-        "$ref": "#/entities/PageView"
-      },
+      "schema": { "$ref": "#/entities/PageView" },
       "description": "Stores page view events for simple analytics."
+    },
+    "/gallery_images/{imageId}": {
+        "schema": { "$ref": "#/entities/GalleryImage" },
+        "description": "Stores images for the gallery."
+    },
+    "/value_propositions/{propositionId}": {
+        "schema": { "$ref": "#/entities/ValueProposition" },
+        "description": "Stores the value proposition items."
+    },
+    "/content_blocks/hero": {
+        "schema": { "$ref": "#/entities/HeroContent" },
+        "description": "Stores content for the hero section."
     }
   }
 }

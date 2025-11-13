@@ -1,19 +1,31 @@
 "use client";
 
 import Image from 'next/image';
-import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import { Card } from '@/components/ui/card';
 import { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { collection, query, orderBy } from 'firebase/firestore';
+import { firestore } from '@/firebase/config';
+import { Skeleton } from '@/components/ui/skeleton';
+
+export interface GalleryImage {
+  id: string;
+  imageUrl: string;
+  description: string;
+  imageHint: string;
+}
 
 export function GallerySection() {
-  const galleryImages = PlaceHolderImages.filter(p => p.id.startsWith('gallery-'));
-  const [selectedImage, setSelectedImage] = useState<ImagePlaceholder | null>(null);
+  const [value, loading, error] = useCollection(
+    firestore ? query(collection(firestore, 'gallery_images'), orderBy('order', 'asc')) : null
+  );
 
-  const handleImageClick = (image: ImagePlaceholder) => {
+  const galleryImages: GalleryImage[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as GalleryImage)) : [];
+  
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+
+  const handleImageClick = (image: GalleryImage) => {
     setSelectedImage(image);
   };
 
@@ -36,6 +48,10 @@ export function GallerySection() {
             </p>
           </div>
           <div className="mt-16 columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+             {loading && Array.from({length: 8}).map((_, i) => (
+              <Skeleton key={i} className="h-64 w-full" />
+            ))}
+            {error && <p className="text-destructive col-span-full text-center">Failed to load images.</p>}
             {galleryImages.map((image) => (
               <div
                 key={image.id}

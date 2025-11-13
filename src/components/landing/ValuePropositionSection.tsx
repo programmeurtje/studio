@@ -1,25 +1,31 @@
-import { Leaf, Gem, Bird } from 'lucide-react';
+"use client";
 
-const features = [
-  {
-    icon: <Leaf className="h-8 w-8 text-primary" />,
-    title: 'Duurzaam Leven',
-    description: 'Elke Bosz Residence wordt gebouwd met hoogwaardige, milieuvriendelijke materialen en een minimale ecologische voetafdruk. Ontworpen voor de toekomst, met respect voor mens en natuur.',
-  },
-  {
-    icon: <Gem className="h-8 w-8 text-primary" />,
-    title: 'Luxe & Design',
-    description: 'Onze residences combineren architecturaal vakmanschap met pure elegantie. Compact van formaat, groots in afwerking — perfectie in elk detail.',
-    
-  },
-  {
-    icon: <Bird className="h-8 w-8 text-primary" />,
-    title: 'Vrijheid Zonder Grenzen',
-    description: 'Met onze efficiënte prefab-productie en plaatsing zijn we operationeel in heel Nederland, België en Duitsland. De impact op de omgeving is minimaal en de nieuwe stikstofregels hebben géén invloed op de realisatie.',
-  },
-];
+import { Leaf, Gem, Bird } from 'lucide-react';
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection, query, orderBy } from "firebase/firestore";
+import { firestore } from "@/firebase/config";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type Feature = {
+  id: string;
+  icon: 'Leaf' | 'Gem' | 'Bird';
+  title: string;
+  description: string;
+};
+
+const iconMap = {
+  Leaf: <Leaf className="h-8 w-8 text-primary" />,
+  Gem: <Gem className="h-8 w-8 text-primary" />,
+  Bird: <Bird className="h-8 w-8 text-primary" />,
+};
 
 export function ValuePropositionSection() {
+  const [value, loading, error] = useCollection(
+    firestore ? query(collection(firestore, 'value_propositions'), orderBy('order', 'asc')) : null
+  );
+
+  const features: Feature[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as Feature)) : [];
+
   return (
     <section className="py-20 sm:py-32">
       <div className="container mx-auto px-4 md:px-6">
@@ -32,10 +38,18 @@ export function ValuePropositionSection() {
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
-          {features.map((feature) => (
+          {loading && Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="text-center">
+              <Skeleton className="h-16 w-16 rounded-full mx-auto mb-6" />
+              <Skeleton className="h-7 w-32 mx-auto" />
+              <Skeleton className="h-20 w-full mt-2" />
+            </div>
+          ))}
+          {error && <p className="text-destructive col-span-3 text-center">Failed to load features.</p>}
+          {!loading && features.map((feature) => (
             <div key={feature.title} className="text-center">
               <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mx-auto mb-6">
-                {feature.icon}
+                {iconMap[feature.icon] || <Gem className="h-8 w-8 text-primary" />}
               </div>
               <h3 className="text-xl font-headline font-semibold leading-7">{feature.title}</h3>
               <p className="mt-2 text-base leading-7 text-muted-foreground">{feature.description}</p>
