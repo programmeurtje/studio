@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
-import { Gallery, Calendar, Edit3 } from "lucide-react";
+import { Images, Calendar, Edit3 } from "lucide-react";
 
 export default function AdminDashboardPage() {
   return (
@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
           <Card className="hover:border-primary transition-colors">
             <CardHeader>
               <div className="flex items-center gap-4">
-                <Gallery className="w-8 h-8 text-primary" />
+                <Images className="w-8 h-8 text-primary" />
                 <div>
                   <CardTitle>Galerij Beheren</CardTitle>
                   <CardDescription>Beheer de afbeeldingen in de fotogalerij.</CardDescription>

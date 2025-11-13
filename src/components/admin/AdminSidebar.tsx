@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Gallery, Calendar, Edit3, LogOut, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Images, Calendar, Edit3, LogOut, ExternalLink } from 'lucide-react';
 import { auth } from '@/firebase/config';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/open-house', label: 'Kijkdagen', icon: Calendar },
-  { href: '/admin/gallery', label: 'Galerij', icon: Gallery },
+  { href: '/admin/gallery', label: 'Galerij', icon: Images },
   { href: '/admin/content', label: 'Content', icon: Edit3 },
 ];
 
@@ -25,6 +25,8 @@ export function AdminSidebar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      // Instead of relying on middleware, we can directly post to our logout API route
+      await fetch('/api/auth/logout', { method: 'POST' });
       router.push('/admin/login');
        toast({
         title: "Uitgelogd",
