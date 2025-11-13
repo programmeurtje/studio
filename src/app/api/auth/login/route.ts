@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 
     // One-time setup: if the user is the designated admin, set the custom claim
     // We check if the claim is already set to avoid doing this on every login.
-    if (user.email === 'admin@boszhouses.nl' && user.customClaims?.admin !== true) {
+    if (user.email === 'smit_bram@hotmail.com' && user.customClaims?.admin !== true) {
         await setAdminClaim(user.uid);
     }
 
