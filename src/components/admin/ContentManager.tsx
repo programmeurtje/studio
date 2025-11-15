@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { updateHeroContent, updateValueProposition } from '@/app/admin/actions';
 import { Skeleton } from '../ui/skeleton';
+import Link from 'next/link';
 
 interface HeroContent {
   title: string;
@@ -81,7 +82,9 @@ export function ContentManager() {
       <Card>
         <CardHeader>
           <CardTitle>Hero Sectie</CardTitle>
-          <CardDescription>Pas de hoofdtitel, subtitel en achtergrondafbeelding aan.</CardDescription>
+          <CardDescription>
+            Pas de hoofdtitel, subtitel en achtergrondafbeelding aan. U kunt URLs plakken of afbeeldingen uploaden via de <Link href="/admin/media" className="underline hover:text-primary">Media</Link> pagina.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {heroLoading && <div className="space-y-4"><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-24 ml-auto" /></div>}

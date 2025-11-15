@@ -11,8 +11,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import Image from 'next/image';
+import Link from 'next/link';
 import { addGalleryImage, updateGalleryImage, deleteGalleryImage } from '@/app/admin/actions';
-import { PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, Library } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Skeleton } from '../ui/skeleton';
 
@@ -95,7 +96,7 @@ export function GalleryManager() {
         <div className="flex justify-between items-center">
           <div>
             <CardTitle>Galerij Afbeeldingen</CardTitle>
-            <CardDescription>Beheer de afbeeldingen in de fotogalerij.</CardDescription>
+            <CardDescription>Beheer de afbeeldingen in de fotogalerij. U kunt URLs plakken of afbeeldingen uploaden via de <Link href="/admin/media" className="underline hover:text-primary">Media</Link> pagina.</CardDescription>
           </div>
           <Button onClick={() => openDialog()}>
             <PlusCircle className="mr-2 h-4 w-4" /> Nieuwe Afbeelding

@@ -76,6 +76,40 @@
             "imageUrl": { "type": "string", "format": "uri" }
         },
         "required": ["title", "subtitle", "imageUrl"]
+    },
+    "MediaItem": {
+      "title": "Media Item",
+      "description": "Represents an uploaded media file in Firebase Storage.",
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string",
+          "description": "The name of the file."
+        },
+        "fullPath": {
+          "type": "string",
+          "description": "The full path of the file in Firebase Storage."
+        },
+        "downloadUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "The public URL to access the file."
+        },
+        "contentType": {
+          "type": "string",
+          "description": "The MIME type of the file."
+        },
+        "size": {
+          "type": "number",
+          "description": "The size of the file in bytes."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the media was uploaded."
+        }
+      },
+      "required": ["fileName", "fullPath", "downloadUrl", "contentType", "size", "createdAt"]
     }
   },
   "auth": {
@@ -101,6 +135,10 @@
     "/content_blocks/hero": {
         "schema": { "$ref": "#/entities/HeroContent" },
         "description": "Stores content for the hero section."
+    },
+    "/media/{mediaId}": {
+      "schema": { "$ref": "#/entities/MediaItem" },
+      "description": "Stores metadata about uploaded media files."
     }
   }
 }

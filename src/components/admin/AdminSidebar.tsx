@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Images, Calendar, Edit3, LogOut, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Images, Calendar, Edit3, LogOut, ExternalLink, Library } from 'lucide-react';
 import { auth } from '@/firebase/config';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/media', label: 'Media', icon: Library },
   { href: '/admin/open-house', label: 'Kijkdagen', icon: Calendar },
   { href: '/admin/gallery', label: 'Galerij', icon: Images },
   { href: '/admin/content', label: 'Content', icon: Edit3 },

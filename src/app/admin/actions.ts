@@ -143,3 +143,36 @@ export async function updateValueProposition(id: string, formData: FormData) {
     return { error: e.message };
   }
 }
+
+// --- Media Actions ---
+
+export async function addMediaItem(fileData: {
+  fileName: string;
+  fullPath: string;
+  downloadUrl: string;
+  contentType: string;
+  size: number;
+}) {
+    try {
+        await adminDb.collection('media').add({
+            ...fileData,
+            createdAt: FieldValue.serverTimestamp(),
+        });
+        revalidatePath('/admin/media');
+        return { success: true };
+    } catch (e: any) {
+        return { error: e.message };
+    }
+}
+
+export async function deleteMediaItem(id: string) {
+    try {
+        // Note: This only deletes the Firestore record, not the file from Storage.
+        // A Cloud Function would be needed to automate file deletion upon record deletion.
+        await adminDb.collection('media').doc(id).delete();
+        revalidatePath('/admin/media');
+        return { success: true };
+    } catch (e: any) {
+        return { error: e.message };
+    }
+}
