@@ -23,21 +23,46 @@ export function LoginForm() {
     setError(null);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // On successful login, the auth state change will be picked up by the middleware
-      // and the user will be redirected to the admin dashboard.
-      // We can optimistically redirect here.
-      router.push('/admin');
-       toast({
+      // 1. First, sign in with Firebase on the client
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      
+      // 2. Get the ID token from the signed-in user
+      const idToken = await user.getIdToken();
+
+      // 3. Send the ID token to our API route to create a session cookie
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Kon geen server-side sessie aanmaken.');
+      }
+
+      // 4. If session is created, show success and redirect
+      toast({
         title: "Login Succesvol",
         description: "U wordt doorgestuurd naar het dashboard.",
       });
+      router.push('/admin');
+
     } catch (err: any) {
-      setError('E-mail of wachtwoord onjuist. Probeer het opnieuw.');
+      let errorMessage = 'E-mail of wachtwoord onjuist. Probeer het opnieuw.';
+      if (err.code === 'auth/invalid-credential') {
+        errorMessage = 'Ongeldige inloggegevens. Controleer uw e-mailadres en wachtwoord.';
+      } else if (err.message.includes('server-side')) {
+        errorMessage = err.message;
+      }
+      
+      setError(errorMessage);
       toast({
         variant: "destructive",
         title: "Login Mislukt",
-        description: "E-mail of wachtwoord onjuist.",
+        description: errorMessage,
       });
     }
 
