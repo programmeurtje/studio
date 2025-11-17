@@ -19,6 +19,7 @@ import { Skeleton } from '../ui/skeleton';
 interface MediaItem {
   id: string;
   fileName: string;
+  fullPath: string;
   downloadUrl: string;
   contentType: string;
   size: number;
@@ -44,6 +45,18 @@ export function MediaManager() {
     }
   };
 
+  const resetUploadState = () => {
+    setFileToUpload(null);
+    setUploading(false);
+    setProgress(0);
+    // Reset the file input element
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
+
+
   const handleUpload = async () => {
     if (!fileToUpload) return;
 
@@ -63,42 +76,42 @@ export function MediaManager() {
         toast({
           variant: 'destructive',
           title: 'Upload Mislukt',
-          description: 'Er is iets misgegaan bij het uploaden van het bestand.',
+          description: 'Er is iets misgegaan bij het uploaden van het bestand. Controleer de CORS-instellingen van uw Storage bucket.',
         });
-        setUploading(false);
+        resetUploadState();
       },
       async () => {
+        // Upload completed successfully, now get the download URL and save metadata
         try {
           const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
           const { metadata } = uploadTask.snapshot;
 
-          const result = await addMediaItem({
+          const fileData = {
             fileName: fileToUpload.name,
             fullPath: metadata.fullPath,
             downloadUrl,
             contentType: metadata.contentType || 'application/octet-stream',
             size: metadata.size,
-          });
+          };
+          
+          const result = await addMediaItem(fileData);
 
-          if (result.error) throw new Error(result.error);
+          if (result.error) {
+            throw new Error(result.error);
+          }
           
           toast({
             title: 'Upload Succesvol',
-            description: `${fileToUpload.name} is geüpload.`,
+            description: `${fileToUpload.name} is geüpload en opgeslagen.`,
           });
         } catch (e: any) {
              toast({
               variant: 'destructive',
               title: 'Opslaan Mislukt',
-              description: 'De media metadata kon niet worden opgeslagen: ' + e.message,
+              description: 'De media metadata kon niet worden opgeslagen in Firestore: ' + e.message,
             });
         } finally {
-            setFileToUpload(null);
-            setUploading(false);
-            setProgress(0);
-            if (document.getElementById('file-input')) {
-              (document.getElementById('file-input') as HTMLInputElement).value = '';
-            }
+            resetUploadState();
         }
       }
     );
@@ -207,3 +220,5 @@ export function MediaManager() {
     </Card>
   );
 }
+
+    
