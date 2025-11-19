@@ -53,11 +53,6 @@ export function HeroSection() {
               Bezoek Onze Kijkdagen
             </a>
           </Button>
-           <Button asChild size="lg" variant="outline" className="font-bold border-white text-white hover:bg-white/10">
-            <a href="#contact">
-              Start Uw Project
-            </a>
-          </Button>
         </div>
       </div>
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
