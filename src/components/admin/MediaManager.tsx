@@ -1,10 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL, deleteObject } from 'firebase/storage';
-import { firestore, storage } from '@/firebase/config';
+import { storage } from '@/firebase/config';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +12,7 @@ import Image from 'next/image';
 import { addMediaItem, deleteMediaItem } from '@/app/admin/actions';
 import { Upload, Copy, Trash2, Check } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Skeleton } from '../ui/skeleton';
+import { useRouter } from 'next/navigation';
 
 interface MediaItem {
   id: string;
@@ -23,17 +21,14 @@ interface MediaItem {
   downloadUrl: string;
   contentType: string;
   size: number;
-  createdAt: { toDate: () => Date };
+  createdAt: string; // Serialized
 }
 
-export function MediaManager() {
+export function MediaManager({ initialData }: { initialData: MediaItem[] }) {
   const { toast } = useToast();
-  const [value, loading, error] = useCollection(
-    firestore ? query(collection(firestore, 'media'), orderBy('createdAt', 'desc')) : null
-  );
+  const router = useRouter();
 
-  const mediaItems: MediaItem[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as MediaItem)) : [];
-
+  const [mediaItems, setMediaItems] = useState(initialData);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [fileToUpload, setFileToUpload] = useState<File | null>(null);
@@ -49,7 +44,6 @@ export function MediaManager() {
     setFileToUpload(null);
     setUploading(false);
     setProgress(0);
-    // Reset the file input element
     const fileInput = document.getElementById('file-input') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
@@ -76,12 +70,11 @@ export function MediaManager() {
         toast({
           variant: 'destructive',
           title: 'Upload Mislukt',
-          description: 'Er is iets misgegaan bij het uploaden van het bestand. Controleer de CORS-instellingen van uw Storage bucket.',
+          description: 'Er is iets misgegaan bij het uploaden van het bestand. Controleer de CORS-instellingen van uw Storage bucket en de security rules.',
         });
         resetUploadState();
       },
       async () => {
-        // Upload completed successfully, now get the download URL and save metadata
         try {
           const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
           const { metadata } = uploadTask.snapshot;
@@ -104,6 +97,7 @@ export function MediaManager() {
             title: 'Upload Succesvol',
             description: `${fileToUpload.name} is geüpload en opgeslagen.`,
           });
+          router.refresh(); // Reload server components to get new list
         } catch (e: any) {
              toast({
               variant: 'destructive',
@@ -119,11 +113,9 @@ export function MediaManager() {
 
   const handleDelete = async (item: MediaItem) => {
       try {
-        // Delete file from Storage
         const fileRef = ref(storage, item.fullPath);
         await deleteObject(fileRef);
 
-        // Delete metadata from Firestore
         const result = await deleteMediaItem(item.id);
         if (result.error) throw new Error(result.error);
 
@@ -131,6 +123,7 @@ export function MediaManager() {
             title: 'Afbeelding verwijderd',
             description: 'De afbeelding is succesvol verwijderd.',
         });
+        router.refresh(); // Reload server components to get new list
       } catch(e: any) {
            toast({
             variant: 'destructive',
@@ -166,11 +159,7 @@ export function MediaManager() {
           {uploading && <Progress value={progress} className="w-full mt-4" />}
         </div>
         
-        {loading && <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {Array.from({length: 12}).map((_, i) => <Skeleton key={i} className="aspect-square w-full" />)}
-        </div>}
-        {error && <p className="text-center text-destructive">Kon de media niet laden.</p>}
-        {!loading && mediaItems.length === 0 && <p className="text-center text-muted-foreground">Nog geen media geüpload.</p>}
+        {mediaItems.length === 0 && <p className="text-center text-muted-foreground">Nog geen media geüpload.</p>}
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {mediaItems.map((item) => (
@@ -220,5 +209,3 @@ export function MediaManager() {
     </Card>
   );
 }
-
-    

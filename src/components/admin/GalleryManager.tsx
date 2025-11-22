@@ -1,9 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/config';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
@@ -15,27 +12,37 @@ import Link from 'next/link';
 import { addGalleryImage, updateGalleryImage, deleteGalleryImage } from '@/app/admin/actions';
 import { PlusCircle, Edit, Trash2, Library } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Skeleton } from '../ui/skeleton';
+import { adminDb } from '@/lib/firebase-admin';
 
-interface GalleryImage {
+type GalleryImage = {
   id: string;
   imageUrl: string;
   description: string;
   imageHint: string;
   order: number;
+};
+
+async function getGalleryImages() {
+    const snapshot = await adminDb.collection('gallery_images').orderBy('order', 'asc').get();
+    if (snapshot.empty) {
+        return [];
+    }
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as GalleryImage[];
 }
 
-export function GalleryManager() {
-  const { toast } = useToast();
-  const [value, loading, error] = useCollection(
-    firestore ? query(collection(firestore, 'gallery_images'), orderBy('order', 'asc')) : null
-  );
 
-  const galleryImages: GalleryImage[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as GalleryImage)) : [];
+export function GalleryManager({ initialData }: { initialData: GalleryImage[] }) {
+  const { toast } = useToast();
+  const [galleryImages, setGalleryImages] = useState(initialData);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<GalleryImage | null>(null);
   const [isPending, setIsPending] = useState(false);
+
+  const refreshData = async () => {
+    // This function can no longer be used as server functions can't be called from client
+    // Instead we rely on revalidating the path and letting Next.js refetch
+  };
 
   const openDialog = (image: GalleryImage | null = null) => {
     setCurrentImage(image);
@@ -62,6 +69,7 @@ export function GalleryManager() {
         description: "De galerij is succesvol bijgewerkt.",
       });
       setIsDialogOpen(false);
+      // Data will be refreshed by Next.js revalidation
     } catch (e: any) {
       toast({
         variant: 'destructive',
@@ -81,6 +89,7 @@ export function GalleryManager() {
             title: 'Afbeelding verwijderd',
             description: 'De afbeelding is succesvol uit de galerij verwijderd.',
         });
+        // Data will be refreshed by Next.js revalidation
       } catch(e: any) {
            toast({
             variant: 'destructive',
@@ -104,11 +113,7 @@ export function GalleryManager() {
         </div>
       </CardHeader>
       <CardContent>
-        {loading && <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {Array.from({length: 8}).map((_, i) => <Skeleton key={i} className="aspect-square w-full" />)}
-        </div>}
-        {error && <p className="text-center text-destructive">Kon de afbeeldingen niet laden.</p>}
-        {!loading && galleryImages.length === 0 && <p className="text-center text-muted-foreground">Nog geen afbeeldingen toegevoegd.</p>}
+        {galleryImages.length === 0 && <p className="text-center text-muted-foreground">Nog geen afbeeldingen toegevoegd.</p>}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {galleryImages.map((image) => (

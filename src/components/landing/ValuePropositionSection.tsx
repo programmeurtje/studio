@@ -1,10 +1,8 @@
-"use client";
-
 import { Leaf, Gem, Bird } from 'lucide-react';
-import { useCollection } from "react-firebase-hooks/firestore";
-import { collection, query, orderBy } from "firebase/firestore";
-import { firestore } from "@/firebase/config";
 import { Skeleton } from "@/components/ui/skeleton";
+import { adminDb } from '@/lib/firebase-admin';
+import { cache } from 'react';
+
 
 type Feature = {
   id: string;
@@ -19,12 +17,20 @@ const iconMap = {
   Bird: <Bird className="h-8 w-8 text-primary" />,
 };
 
-export function ValuePropositionSection() {
-  const [value, loading, error] = useCollection(
-    firestore ? query(collection(firestore, 'value_propositions'), orderBy('order', 'asc')) : null
-  );
+const getFeatures = cache(async (): Promise<Feature[]> => {
+    try {
+        const snapshot = await adminDb.collection('value_propositions').orderBy('order', 'asc').get();
+        if (snapshot.empty) return [];
+        return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Feature));
+    } catch (error) {
+        console.error("Error fetching features:", error);
+        return [];
+    }
+});
 
-  const features: Feature[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as Feature)) : [];
+
+export async function ValuePropositionSection() {
+  const features = await getFeatures();
 
   return (
     <section className="py-20 sm:py-32">
@@ -38,15 +44,14 @@ export function ValuePropositionSection() {
           </p>
         </div>
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
-          {loading && Array.from({ length: 3 }).map((_, i) => (
+          {features.length === 0 && Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="text-center">
               <Skeleton className="h-16 w-16 rounded-full mx-auto mb-6" />
               <Skeleton className="h-7 w-32 mx-auto" />
               <Skeleton className="h-20 w-full mt-2" />
             </div>
           ))}
-          {error && <p className="text-destructive col-span-3 text-center">Failed to load features.</p>}
-          {!loading && features.map((feature) => (
+          {features.map((feature) => (
             <div key={feature.title} className="text-center">
               <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 mx-auto mb-6">
                 {iconMap[feature.icon] || <Gem className="h-8 w-8 text-primary" />}

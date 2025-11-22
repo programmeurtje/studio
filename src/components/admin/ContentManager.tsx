@@ -1,9 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useDocument, useCollection } from 'react-firebase-hooks/firestore';
-import { doc, collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/config';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -28,21 +25,10 @@ interface ValueProposition {
   order: number;
 }
 
-export function ContentManager() {
+export function ContentManager({ heroContent, valuePropositions }: { heroContent?: HeroContent, valuePropositions: ValueProposition[] }) {
   const { toast } = useToast();
   
-  // Hero Content
-  const [heroValue, heroLoading, heroError] = useDocument(
-    firestore ? doc(firestore, 'content_blocks', 'hero') : null
-  );
-  const heroContent = heroValue?.data() as HeroContent;
   const [isHeroPending, setIsHeroPending] = useState(false);
-
-  // Value Propositions
-  const [vpValue, vpLoading, vpError] = useCollection(
-    firestore ? query(collection(firestore, 'value_propositions'), orderBy('order', 'asc')) : null
-  );
-  const valuePropositions = vpValue?.docs.map(doc => ({ id: doc.id, ...doc.data() } as ValueProposition)) ?? [];
   const [isVpPending, setIsVpPending] = useState(false);
 
   const handleHeroSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -87,8 +73,7 @@ export function ContentManager() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {heroLoading && <div className="space-y-4"><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-24 ml-auto" /></div>}
-          {heroError && <p className="text-destructive">Kon de hero content niet laden.</p>}
+          {!heroContent && <div className="space-y-4"><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-full" /><Skeleton className="h-10 w-24 ml-auto" /></div>}
           {heroContent && (
             <form onSubmit={handleHeroSubmit} className="space-y-4">
               <div>
@@ -118,8 +103,7 @@ export function ContentManager() {
           <CardDescription>Beheer de drie "Waarom Bosz Houses?" blokken.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-            {vpLoading && <div className="space-y-4"><Skeleton className="h-40 w-full" /><Skeleton className="h-40 w-full" /><Skeleton className="h-40 w-full" /></div>}
-            {vpError && <p className="text-destructive">Kon de waardeproposities niet laden.</p>}
+            {!valuePropositions && <div className="space-y-4"><Skeleton className="h-40 w-full" /><Skeleton className="h-40 w-full" /><Skeleton className="h-40 w-full" /></div>}
             {valuePropositions.map((vp, index) => (
                 <Card key={vp.id} className="bg-secondary/50 p-4">
                     <form onSubmit={handleValuePropositionSubmit} className="space-y-4">

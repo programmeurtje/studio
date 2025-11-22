@@ -1,9 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/config';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
@@ -15,28 +12,34 @@ import { addOpenHouseDate, updateOpenHouseDate, deleteOpenHouseDate } from '@/ap
 import { PlusCircle, Edit, Trash2, MoreHorizontal } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Skeleton } from '../ui/skeleton';
+import { adminDb } from '@/lib/firebase-admin';
 
-interface OpenHouseDate {
-  id: string;
-  month: string;
-  days: string;
-  createdAt?: any;
+async function getOpenHouseDates() {
+    const snapshot = await adminDb.collection('open_house_dates').orderBy('createdAt', 'asc').get();
+    if (snapshot.empty) {
+        return [];
+    }
+    return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    })) as { id: string; month: string; days: string; createdAt: any }[];
 }
 
-export function OpenHouseDateManager() {
+
+export function OpenHouseDateManager({ initialData }: { initialData: { id: string; month: string; days: string; createdAt: any }[] }) {
   const { toast } = useToast();
-  const [value, loading, error] = useCollection(
-    firestore ? query(collection(firestore, 'open_house_dates'), orderBy('createdAt', 'asc')) : null
-  );
-
-  const openHouseDates: OpenHouseDate[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as OpenHouseDate)) : [];
-
+  
+  const [openHouseDates, setOpenHouseDates] = useState(initialData);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [currentDate, setCurrentDate] = useState<OpenHouseDate | null>(null);
+  const [currentDate, setCurrentDate] = useState<{ id: string; month: string; days: string; } | null>(null);
   const [isPending, setIsPending] = useState(false);
 
-  const openDialog = (date: OpenHouseDate | null = null) => {
+  const refreshData = async () => {
+    const data = await getOpenHouseDates();
+    setOpenHouseDates(data);
+  };
+
+  const openDialog = (date: { id: string; month: string; days: string; } | null = null) => {
     setCurrentDate(date);
     setIsDialogOpen(true);
   };
@@ -63,6 +66,7 @@ export function OpenHouseDateManager() {
         description: "De kijkdagen zijn succesvol opgeslagen.",
       });
       setIsDialogOpen(false);
+      await refreshData();
     } catch (e: any) {
       toast({
         variant: 'destructive',
@@ -82,6 +86,7 @@ export function OpenHouseDateManager() {
             title: 'Datum verwijderd',
             description: 'De kijkdag is succesvol verwijderd.',
         });
+        await refreshData();
       } catch(e: any) {
            toast({
             variant: 'destructive',
@@ -115,15 +120,7 @@ export function OpenHouseDateManager() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading && Array.from({length: 3}).map((_, i) => (
-                <TableRow key={i}>
-                    <TableCell><Skeleton className="h-5 w-32" /></TableCell>
-                    <TableCell><Skeleton className="h-5 w-48" /></TableCell>
-                    <TableCell className="text-right"><Skeleton className="h-8 w-8 ml-auto" /></TableCell>
-                </TableRow>
-            ))}
-            {error && <TableRow><TableCell colSpan={3} className="text-center text-destructive">Kon de datums niet laden.</TableCell></TableRow>}
-            {!loading && openHouseDates.length === 0 && <TableRow><TableCell colSpan={3} className="text-center">Nog geen kijkdagen toegevoegd.</TableCell></TableRow>}
+            {openHouseDates.length === 0 && <TableRow><TableCell colSpan={3} className="text-center">Nog geen kijkdagen toegevoegd.</TableCell></TableRow>}
             {openHouseDates.map((date) => (
               <TableRow key={date.id}>
                 <TableCell className="font-medium">{date.month}</TableCell>

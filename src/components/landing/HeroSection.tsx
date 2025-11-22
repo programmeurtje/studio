@@ -1,24 +1,32 @@
-"use client";
-
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
-import { useDocument } from 'react-firebase-hooks/firestore';
-import { doc } from 'firebase/firestore';
-import { firestore } from '@/firebase/config';
 import { Skeleton } from '../ui/skeleton';
+import { adminDb } from '@/lib/firebase-admin';
+import { cache } from 'react';
 
-export function HeroSection() {
-    const [value, loading, error] = useDocument(
-        firestore ? doc(firestore, 'content_blocks', 'hero') : null
-    );
+// Use React.cache to memoize the fetch request across server components
+const getHeroContent = cache(async () => {
+    try {
+        const doc = await adminDb.collection('content_blocks').doc('hero').get();
+        if (!doc.exists) {
+            return null;
+        }
+        return doc.data() as { title: string; subtitle: string; imageUrl: string };
+    } catch (error) {
+        console.error("Error fetching hero content:", error);
+        return null;
+    }
+});
 
-    const heroContent = value?.data();
+
+export async function HeroSection() {
+    const heroContent = await getHeroContent();
 
   return (
     <section className="relative h-screen flex items-center justify-center text-center text-primary-foreground">
-      {loading && <Skeleton className="absolute inset-0" />}
-      {!loading && heroContent && (
+      {!heroContent && <Skeleton className="absolute inset-0" />}
+      {heroContent && (
         <Image
           src={heroContent.imageUrl}
           alt={heroContent.title}
@@ -30,12 +38,12 @@ export function HeroSection() {
       )}
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 p-4 max-w-4xl">
-        {loading ? (
+        {!heroContent ? (
             <>
                 <Skeleton className="h-16 md:h-24 lg:h-28 w-3/4 mx-auto" />
                 <Skeleton className="h-6 w-1/2 mx-auto mt-4" />
             </>
-        ) : heroContent ? (
+        ) : (
             <>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold tracking-tight text-white">
                     {heroContent.title}
@@ -44,8 +52,6 @@ export function HeroSection() {
                     {heroContent.subtitle}
                 </p>
             </>
-        ): (
-            <p className="text-destructive">Hero content could not be loaded.</p>
         )}
         <div className="mt-8 flex justify-center gap-4">
            <Button asChild size="lg" className="bg-primary text-primary-foreground font-bold hover:bg-primary/90">
