@@ -1,3 +1,5 @@
+'use server';
+
 import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, setAdminClaim } from '@/lib/firebase-admin';
 import { cookies } from 'next/headers';
@@ -14,12 +16,11 @@ export async function POST(request: NextRequest) {
     const decodedToken = await adminAuth.verifyIdToken(idToken);
     const user = await adminAuth.getUser(decodedToken.uid);
 
-    // One-time setup: if the user is the designated admin, set the custom claim
-    // We check if the claim is already set to avoid doing this on every login.
-    if (user.email === 'smit_bram@hotmail.com' && user.customClaims?.admin !== true) {
+    // If the user doesn't have an admin claim yet, set it.
+    // This makes any new user created in Firebase Auth an admin on first login.
+    if (user.customClaims?.admin !== true) {
         await setAdminClaim(user.uid);
     }
-
 
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
     const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
