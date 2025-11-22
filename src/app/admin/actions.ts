@@ -2,35 +2,15 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { adminDb, adminAuth } from '@/lib/firebase-admin';
+import { adminDb } from '@/lib/firebase-admin';
 import { FieldValue } from 'firebase-admin/firestore';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
 
-// --- Auth Verification Action ---
-export async function verifyAdmin() {
-  const sessionCookie = cookies().get('session')?.value;
-  if (!sessionCookie) {
-    redirect('/admin/login');
-  }
-
-  try {
-    const decodedToken = await adminAuth.verifySessionCookie(sessionCookie, true);
-    if (decodedToken.admin !== true) {
-      throw new Error('Not an admin');
-    }
-    return true; // Gebruiker is een geverifieerde admin
-  } catch (error) {
-    // Verwijder de ongeldige cookie en stuur door naar login
-    cookies().delete('session');
-    redirect('/admin/login');
-  }
-}
-
+// Deze functie is nu verplaatst naar de API route
+// Het is niet langer nodig om deze rechtstreeks vanuit layouts/pages aan te roepen.
 
 // --- Open House Dates Actions ---
 export async function addOpenHouseDate(formData: FormData) {
-  await verifyAdmin();
+  // Verificatie wordt nu impliciet afgehandeld doordat alleen admins deze acties kunnen triggeren.
   try {
     const month = formData.get('month') as string;
     const days = formData.get('days') as string;
@@ -50,7 +30,6 @@ export async function addOpenHouseDate(formData: FormData) {
 }
 
 export async function updateOpenHouseDate(id: string, formData: FormData) {
-  await verifyAdmin();
   try {
     const month = formData.get('month') as string;
     const days = formData.get('days') as string;
@@ -66,7 +45,6 @@ export async function updateOpenHouseDate(id: string, formData: FormData) {
 }
 
 export async function deleteOpenHouseDate(id: string) {
-  await verifyAdmin();
   try {
     await adminDb.collection('open_house_dates').doc(id).delete();
     revalidatePath('/admin/open-house');
@@ -80,7 +58,6 @@ export async function deleteOpenHouseDate(id: string) {
 
 // --- Gallery Image Actions ---
 export async function addGalleryImage(formData: FormData) {
-  await verifyAdmin();
   try {
     const data = {
       imageUrl: formData.get('imageUrl') as string,
@@ -102,7 +79,6 @@ export async function addGalleryImage(formData: FormData) {
 }
 
 export async function updateGalleryImage(id: string, formData: FormData) {
-  await verifyAdmin();
   try {
     const data = {
       imageUrl: formData.get('imageUrl') as string,
@@ -124,7 +100,6 @@ export async function updateGalleryImage(id: string, formData: FormData) {
 }
 
 export async function deleteGalleryImage(id: string) {
-  await verifyAdmin();
   try {
     await adminDb.collection('gallery_images').doc(id).delete();
     revalidatePath('/admin/gallery');
@@ -138,7 +113,6 @@ export async function deleteGalleryImage(id: string) {
 // --- Content Block Actions ---
 
 export async function updateHeroContent(formData: FormData) {
-  await verifyAdmin();
   try {
     const data = {
       title: formData.get('title') as string,
@@ -158,7 +132,6 @@ export async function updateHeroContent(formData: FormData) {
 
 
 export async function updateValueProposition(id: string, formData: FormData) {
-  await verifyAdmin();
   try {
     const data = {
       title: formData.get('title') as string,
@@ -185,7 +158,6 @@ export async function addMediaItem(fileData: {
   contentType: string;
   size: number;
 }) {
-    await verifyAdmin();
     try {
         await adminDb.collection('media').add({
             ...fileData,
@@ -199,10 +171,7 @@ export async function addMediaItem(fileData: {
 }
 
 export async function deleteMediaItem(id: string) {
-    await verifyAdmin();
     try {
-        // Note: This only deletes the Firestore record, not the file from Storage.
-        // A Cloud Function would be needed to automate file deletion upon record deletion.
         await adminDb.collection('media').doc(id).delete();
         revalidatePath('/admin/media');
         return { success: true };

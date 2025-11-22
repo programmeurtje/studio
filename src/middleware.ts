@@ -1,33 +1,30 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
 
-// This middleware is now much simpler. It only checks for the presence of the session cookie.
-// The actual validation of the cookie is done in a Server Component (e.g., AdminLayout).
+// Deze middleware is nu veel simpeler. Het controleert alleen of de sessiecookie
+// aanwezig is op admin-pagina's en stuurt de gebruiker door als dat niet het geval is.
+// De daadwerkelijke verificatie van de cookie gebeurt client-side via een API-route.
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const sessionCookie = request.cookies.get('session');
 
-  // If the request is for an admin page and not the login page itself
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    // If the session cookie doesn't exist, redirect to the login page.
-    if (!sessionCookie) {
-      return NextResponse.redirect(new URL('/admin/login', request.url));
-    }
+  // Als het een verzoek is voor een admin-pagina (maar niet de loginpagina zelf)
+  // en de sessiecookie bestaat niet, stuur dan door naar de loginpagina.
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login') && !sessionCookie) {
+    return NextResponse.redirect(new URL('/admin/login', request.url));
   }
 
-  // If the user is logged in (has a session cookie) and tries to visit the login page,
-  // redirect them to the admin dashboard.
-  if (pathname === '/admin/login') {
-    if (sessionCookie) {
-      // We don't need to verify the cookie here, just redirect.
-      // If the cookie is invalid, the AdminLayout will catch it and redirect back to login.
-      return NextResponse.redirect(new URL('/admin', request.url));
-    }
+  // Als de gebruiker is ingelogd (heeft een sessiecookie) en de loginpagina probeert te bezoeken,
+  // stuur ze dan naar het admin-dashboard. De layout zal de her-verificatie afhandelen.
+  if (pathname.startsWith('/admin/login') && sessionCookie) {
+    return NextResponse.redirect(new URL('/admin', request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
+  // BELANGRIJK: De matcher mag GEEN API-routes bevatten, omdat die
+  // firebase-admin gebruiken, wat de Edge-runtime crasht.
   matcher: ['/admin/:path*'],
 };
