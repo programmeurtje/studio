@@ -1,3 +1,4 @@
+
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { verifyAdmin } from './actions';
 
@@ -6,8 +7,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Deze server component zal de gebruiker verifiëren bij elke navigatie binnen het admin-paneel.
-  // Dit is de veilige plek om firebase-admin te gebruiken.
+  // This server component will verify the user on every navigation within the admin panel.
+  // This is the safe place to use firebase-admin logic.
   await verifyAdmin();
 
   return (

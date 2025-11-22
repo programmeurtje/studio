@@ -1,27 +1,26 @@
+
 import { NextResponse, type NextRequest } from 'next/server';
 
-// Deze middleware is nu veel simpeler. Het controleert alleen op de aanwezigheid van de sessie-cookie.
-// De daadwerkelijke validatie van de cookie wordt gedaan in de `AdminLayout` server component.
-export async function middleware(request: NextRequest) {
+// This middleware is now much simpler. It only checks for the presence of the session cookie.
+// The actual validation of the cookie is done in a Server Component (e.g., AdminLayout).
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const sessionCookie = request.cookies.get('session');
 
-  // Als de request voor een admin pagina is en niet de login pagina zelf
+  // If the request is for an admin page and not the login page itself
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    const sessionCookie = request.cookies.get('session');
-
-    // Als de sessie-cookie niet bestaat, stuur door naar de login pagina.
+    // If the session cookie doesn't exist, redirect to the login page.
     if (!sessionCookie) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }
 
-  // Als de gebruiker ingelogd is (heeft een sessie-cookie) en probeert de login-pagina te bezoeken,
-  // stuur ze dan door naar het admin dashboard.
+  // If the user is logged in (has a session cookie) and tries to visit the login page,
+  // redirect them to the admin dashboard.
   if (pathname === '/admin/login') {
-    const sessionCookie = request.cookies.get('session');
     if (sessionCookie) {
-      // We hoeven de cookie hier niet te verifiëren, alleen doorsturen.
-      // Als de cookie ongeldig is, zal `AdminLayout` dit opvangen en terugsturen naar de login.
+      // We don't need to verify the cookie here, just redirect.
+      // If the cookie is invalid, the AdminLayout will catch it and redirect back to login.
       return NextResponse.redirect(new URL('/admin', request.url));
     }
   }
