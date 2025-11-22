@@ -15,11 +15,13 @@ export async function verifyAdmin() {
 
   try {
     const decodedToken = await adminAuth.verifySessionCookie(sessionCookie, true);
-    if (!decodedToken.admin) {
+    if (decodedToken.admin !== true) {
       throw new Error('Not an admin');
     }
-    return true; // User is a verified admin
+    return true; // Gebruiker is een geverifieerde admin
   } catch (error) {
+    // Verwijder de ongeldige cookie en stuur door naar login
+    cookies().delete('session');
     redirect('/admin/login');
   }
 }

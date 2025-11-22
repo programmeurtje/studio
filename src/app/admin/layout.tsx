@@ -6,7 +6,8 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // This server component will verify the user on every navigation within the admin panel.
+  // Deze server component zal de gebruiker verifiëren bij elke navigatie binnen het admin-paneel.
+  // Dit is de veilige plek om firebase-admin te gebruiken.
   await verifyAdmin();
 
   return (
