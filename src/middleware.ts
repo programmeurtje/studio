@@ -1,26 +1,27 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-// This middleware is now only responsible for checking if a session cookie *exists*.
-// It does NOT verify the cookie. Verification happens in the AdminLayout server component.
-// This avoids pulling firebase-admin into the Edge runtime and prevents the crash.
-export function middleware(request: NextRequest) {
+// This middleware is now much simpler. It only checks for the presence of the session cookie.
+// The actual validation of the cookie is done in the `AdminLayout` server component.
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // If the request is for an admin page, check for the session cookie.
+  // If the request is for an admin page and not the login page itself
   if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
     const sessionCookie = request.cookies.get('session');
-    
-    // If the cookie doesn't exist, redirect to the login page.
+
+    // If the session cookie doesn't exist, redirect to the login page.
     if (!sessionCookie) {
       return NextResponse.redirect(new URL('/admin/login', request.url));
     }
   }
 
-  // If already on the login page, check if a cookie exists.
-  // If so, redirect to the dashboard. This prevents a logged-in user from seeing the login page.
+  // If the user is logged in (has a session cookie) and tries to access the login page,
+  // redirect them to the admin dashboard.
   if (pathname === '/admin/login') {
     const sessionCookie = request.cookies.get('session');
     if (sessionCookie) {
+      // We don't need to verify the cookie here, just redirect.
+      // If the cookie is invalid, the `AdminLayout` will catch it and redirect back to login.
       return NextResponse.redirect(new URL('/admin', request.url));
     }
   }
@@ -29,6 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match all paths in the admin section
   matcher: ['/admin/:path*'],
 };
