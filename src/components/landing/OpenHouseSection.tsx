@@ -3,9 +3,6 @@
 import { CalendarDays, MapPin, CalendarPlus } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '../ui/button';
-import { useCollection } from 'react-firebase-hooks/firestore';
-import { collection, query, orderBy } from 'firebase/firestore';
-import { firestore } from '@/firebase/config';
 
 type OpenHouseDate = {
   id: string;
@@ -13,19 +10,23 @@ type OpenHouseDate = {
   days: string;
 };
 
+// Statische data voor de kijkdagen, zoals in de screenshot
+const openHouseDates: OpenHouseDate[] = [
+    { id: '1', month: 'November 2025', days: 'Vrijdag 31 oktober & Zaterdag 1 november' },
+    { id: '2', month: 'December 2025', days: 'Vrijdag 5 december & Zaterdag 6 december' },
+    { id: '3', month: 'Januari 2026', days: 'Vrijdag 2 januari & Zaterdag 3 januari' },
+    { id: '4', month: 'Februari 2026', days: 'Vrijdag 6 februari & Zaterdag 7 februari' },
+    { id: '5', month: 'Maart 2026', days: 'Vrijdag 6 maart & Zaterdag 7 maart' },
+    { id: '6', month: 'April 2026', days: 'Vrijdag 3 april & Zaterdag 4 april' },
+];
+
+
 const location = {
   address: "Daniël Goedkoopstraat 30, 1349 GJ Almere, Nederland",
   googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Daniël+Goedkoopstraat+30,+1349+GJ+Almere,+Nederland"
 };
 
 export function OpenHouseSection() {
-  const [value, loading, error] = useCollection(
-    firestore ? query(collection(firestore, 'open_house_dates'), orderBy('createdAt', 'asc')) : null
-  );
-
-  const openHouseDates: OpenHouseDate[] = value ? value.docs.map(doc => ({ id: doc.id, ...doc.data() } as OpenHouseDate)) : [];
-
-
   return (
     <section id="kijkdagen" className="py-20 sm:py-32">
       <div className="container mx-auto px-4 md:px-6">
@@ -39,9 +40,7 @@ export function OpenHouseSection() {
         </div>
         
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {loading && <p>Loading...</p>}
-          {error && <p>Error: {error.message}</p>}
-          {openHouseDates && openHouseDates.map((date) => (
+          {openHouseDates.map((date) => (
             <Card 
               key={date.id} 
               className="text-center bg-card border-primary/20"
@@ -57,7 +56,7 @@ export function OpenHouseSection() {
               </CardContent>
             </Card>
           ))}
-           {!loading && openHouseDates.length === 0 && (
+           {openHouseDates.length === 0 && (
              <p className="col-span-full text-center text-muted-foreground">Er zijn momenteel geen open huis dagen gepland. Kom snel terug!</p>
            )}
         </div>
