@@ -131,8 +131,8 @@ export function BrochureRequestDialog() {
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className='text-base'>Uw wensen (optioneel)</AccordionTrigger>
-              <AccordionContent className="pb-1">
-                <div className="space-y-6 pt-4">
+              <AccordionContent className="px-1">
+                <div className="space-y-6 pt-4 pb-2">
                   <div className='space-y-3'>
                       <Label>Voor hoeveel huisjes heeft u interesse?</Label>
                       <RadioGroup value={interestCount} onValueChange={setInterestCount} className='gap-2'>
