@@ -15,7 +15,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Label } from '../ui/label';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '../ui/textarea';
+import { Textarea } from '@/components/ui/textarea';
 
 export function BrochureRequestDialog() {
   const [open, setOpen] = useState(false);
@@ -131,7 +131,7 @@ export function BrochureRequestDialog() {
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className='text-base'>Uw wensen (optioneel)</AccordionTrigger>
-              <AccordionContent>
+              <AccordionContent className="pb-1">
                 <div className="space-y-6 pt-4">
                   <div className='space-y-3'>
                       <Label>Voor hoeveel huisjes heeft u interesse?</Label>
