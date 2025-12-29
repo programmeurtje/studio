@@ -8,6 +8,7 @@ import {
   Dialog,
   DialogContent,
 } from '@/components/ui/dialog';
+import { cn } from '@/lib/utils';
 
 export function GallerySection() {
   const galleryImages = PlaceHolderImages.filter(p => p.id.startsWith('gallery-'));
@@ -35,38 +36,50 @@ export function GallerySection() {
               Ontdek het vakmanschap en de sfeer van Bosz Houses.
             </p>
           </div>
-          <div className="mt-16 columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            {galleryImages.map((image) => (
-              <div
-                key={image.id}
-                className="break-inside-avoid cursor-pointer"
-                onClick={() => handleImageClick(image)}
-              >
-                <Card className="overflow-hidden border-2 border-transparent hover:border-primary transition-all duration-300">
-                  <Image
-                    src={image.imageUrl}
-                    alt={image.description}
-                    width={400}
-                    height={600}
-                    className="w-full h-auto object-cover transition-transform duration-300 hover:scale-105"
-                    data-ai-hint={image.imageHint}
-                  />
-                </Card>
-              </div>
-            ))}
+          <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            {galleryImages.map((image) => {
+               const ratio =
+                image.ratio === "landscape"
+                  ? "aspect-[4/3]"
+                  : image.ratio === "square"
+                  ? "aspect-square"
+                  : "aspect-[3/4]"; // portrait default
+
+              return (
+                <div
+                  key={image.id}
+                  className="group cursor-pointer"
+                  onClick={() => handleImageClick(image)}
+                >
+                  <Card className="overflow-hidden border-2 border-transparent group-hover:border-primary transition-all duration-300">
+                    <div className={cn("relative w-full", ratio)}>
+                      <Image
+                        src={image.imageUrl}
+                        alt={image.description}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        data-ai-hint={image.imageHint}
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      />
+                    </div>
+                  </Card>
+                </div>
+              );
+            })}
           </div>
         </div>
 
         {selectedImage && (
           <DialogContent className="max-w-4xl p-2 bg-transparent border-none">
-            <Image
-              src={selectedImage.imageUrl}
-              alt={selectedImage.description}
-              width={1200}
-              height={800}
-              className="w-full h-auto object-contain rounded-lg"
-              data-ai-hint={selectedImage.imageHint}
-            />
+             <div className="relative w-full max-h-[85vh] h-[85vh]">
+                <Image
+                  src={selectedImage.imageUrl}
+                  alt={selectedImage.description}
+                  fill
+                  className="object-contain rounded-lg"
+                  data-ai-hint={selectedImage.imageHint}
+                />
+            </div>
           </DialogContent>
         )}
       </Dialog>
