@@ -20,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 export function BrochureRequestDialog() {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
+  const [language, setLanguage] = useState('Nederlands');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
@@ -36,6 +37,7 @@ export function BrochureRequestDialog() {
     if (!isOpen) {
       // Reset state when dialog is closed
       setTimeout(() => {
+        setLanguage('Nederlands');
         setEmail('');
         setError('');
         setInterestCount(undefined);
@@ -59,6 +61,7 @@ export function BrochureRequestDialog() {
     const formspreeEndpoint = "https://formspree.io/f/xzzklldg";
     const formData = new FormData();
     
+    formData.append('language', language);
     formData.append('email', email);
     formData.append('_subject', 'Nieuwe brochure aanvraag');
     formData.append('Aantal huisjes interesse', interestCount || 'Niet ingevuld');
@@ -111,6 +114,14 @@ export function BrochureRequestDialog() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+          <div className="space-y-3">
+              <Label>Taal / Language *</Label>
+              <RadioGroup value={language} onValueChange={setLanguage} className='flex gap-4'>
+                  <div className="flex items-center space-x-2"><RadioGroupItem value="Nederlands" id="lang-nl" /><Label htmlFor="lang-nl" className="font-normal">Nederlands</Label></div>
+                  <div className="flex items-center space-x-2"><RadioGroupItem value="English" id="lang-en" /><Label htmlFor="lang-en" className="font-normal">English</Label></div>
+              </RadioGroup>
+          </div>
+        
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="email" className="text-right">
               E-mail *
@@ -131,8 +142,8 @@ export function BrochureRequestDialog() {
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className='text-base'>Uw wensen (optioneel)</AccordionTrigger>
-              <AccordionContent className="px-1">
-                <div className="space-y-6 pt-4 pb-2">
+              <AccordionContent className="p-4 pt-4 pb-2">
+                <div className="space-y-6">
                   <div className='space-y-3'>
                       <Label>Voor hoeveel huisjes heeft u interesse?</Label>
                       <RadioGroup value={interestCount} onValueChange={setInterestCount} className='gap-2'>

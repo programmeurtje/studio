@@ -9,16 +9,16 @@
     {
       "id": "gallery-1",
       "description": "Licht en modern interieur van een Bosz House",
-      "imageUrl": "/images/gallery-1.jpeg",
+      "imageUrl": "/images/gallery-1.webp",
       "imageHint": "tiny house interior",
       "ratio": "portrait"
     },
     {
       "id": "gallery-2",
       "description": "Stijlvol interieur met houten details in een Bosz House",
-      "imageUrl": "/images/gallery-2.jpeg",
+      "imageUrl": "/images/gallery-2.webp",
       "imageHint": "house interior",
-      "ratio": "landscape"
+      "ratio": "portrait"
     },
     {
       "id": "gallery-3",
@@ -30,35 +30,35 @@
     {
       "id": "gallery-4",
       "description": "Ruimtelijk en helder interieur van een luxe tiny house",
-      "imageUrl": "/images/gallery-4.jpeg",
+      "imageUrl": "/images/gallery-4.webp",
       "imageHint": "modern interior",
-      "ratio": "square"
+      "ratio": "portrait"
     },
     {
       "id": "gallery-5",
       "description": "Sfeer impresse van huisje in bergen",
-      "imageUrl": "/images/gallery-5.jpeg",
+      "imageUrl": "/images/gallery-5.webp",
       "imageHint": "tiny house mountains",
       "ratio": "landscape"
     },
     {
       "id": "gallery-6",
       "description": "Bouwtekening tiny house",
-      "imageUrl": "/images/gallery-6.jpeg",
+      "imageUrl": "/images/gallery-6.webp",
       "imageHint": "tiny house sketch",
-      "ratio": "portrait"
+      "ratio": "landscape"
     },
     {
       "id": "gallery-7",
       "description": "Sfeer impressie van huisje in achtertuin",
-      "imageUrl": "/images/gallery-7.jpeg",
+      "imageUrl": "/images/gallery-7.webp",
       "imageHint": "tiny house backyard",
-      "ratio": "square"
+      "ratio": "landscape"
     },
     {
       "id": "gallery-8",
       "description": "Bouwen van tiny house",
-      "imageUrl": "/images/gallery-8.jpeg",
+      "imageUrl": "/images/gallery-8.webp",
       "imageHint": "tiny house construction",
       "ratio": "landscape"
     }
