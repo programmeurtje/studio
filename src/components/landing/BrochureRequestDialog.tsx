@@ -104,7 +104,7 @@ export function BrochureRequestDialog() {
           Brochure
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md max-h-[90vh]">
+      <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-primary">
             Ontvang de Brochure
@@ -114,79 +114,83 @@ export function BrochureRequestDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="pr-6 -mr-6">
-          <form onSubmit={handleSubmit} className="space-y-4 pt-4">
-            <div className="space-y-3">
-                <Label>Taal / Language *</Label>
-                <RadioGroup value={language} onValueChange={setLanguage} className='flex gap-4'>
-                    <div className="flex items-center space-x-2"><RadioGroupItem value="Nederlands" id="lang-nl" /><Label htmlFor="lang-nl" className="font-normal">Nederlands</Label></div>
-                    <div className="flex items-center space-x-2"><RadioGroupItem value="English" id="lang-en" /><Label htmlFor="lang-en" className="font-normal">English</Label></div>
-                </RadioGroup>
-            </div>
-          
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">
-                E-mail *
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="uw.email@adres.nl"
-                className="col-span-3"
-                required
-              />
-            </div>
-            {error && <p className="col-span-4 text-sm font-medium text-destructive text-center">{error}</p>}
-            
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className='text-base'>Uw wensen (optioneel)</AccordionTrigger>
-                <AccordionContent className="p-4 pt-4 pb-2">
-                  <div className="space-y-6">
-                    <div className='space-y-3'>
-                        <Label>Voor hoeveel huisjes heeft u interesse?</Label>
-                        <RadioGroup value={interestCount} onValueChange={setInterestCount} className='gap-2'>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="1" id="r1-1" /><Label htmlFor="r1-1" className="font-normal">1</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="2-5" id="r1-2" /><Label htmlFor="r1-2" className="font-normal">2–5</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="5+" id="r1-3" /><Label htmlFor="r1-3" className="font-normal">5+</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Nog niet zeker" id="r1-4" /><Label htmlFor="r1-4" className="font-normal">Nog niet zeker</Label></div>
+        <div className="flex-grow overflow-hidden">
+            <ScrollArea className="h-full pr-6 -mr-6">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="space-y-3">
+                        <Label>Taal / Language *</Label>
+                        <RadioGroup value={language} onValueChange={setLanguage} className='flex gap-4'>
+                            <div className="flex items-center space-x-2"><RadioGroupItem value="Nederlands" id="lang-nl" /><Label htmlFor="lang-nl" className="font-normal">Nederlands</Label></div>
+                            <div className="flex items-center space-x-2"><RadioGroupItem value="English" id="lang-en" /><Label htmlFor="lang-en" className="font-normal">English</Label></div>
                         </RadioGroup>
                     </div>
-                    <div className='space-y-3'>
-                        <Label>Heeft u al een locatie waar het huisje/de huisjes geplaatst kunnen worden?</Label>
-                        <RadioGroup value={hasLocation} onValueChange={setHasLocation} className='gap-2'>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Ja" id="r2-1" /><Label htmlFor="r2-1" className="font-normal">Ja</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Nee" id="r2-2" /><Label htmlFor="r2-2" className="font-normal">Nee</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Ik ben mij nog aan het oriënteren" id="r2-3" /><Label htmlFor="r2-3" className="font-normal">Ik ben mij nog aan het oriënteren</Label></div>
-                        </RadioGroup>
+                
+                    <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="email" className="text-right">
+                        E-mail *
+                    </Label>
+                    <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="uw.email@adres.nl"
+                        className="col-span-3"
+                        required
+                    />
                     </div>
-                    <div className='space-y-3'>
-                        <Label>Wanneer zou u het huisje idealiter willen realiseren?</Label>
-                        <RadioGroup value={timeline} onValueChange={setTimeline} className='gap-2'>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Zo snel mogelijk" id="r3-1" /><Label htmlFor="r3-1" className="font-normal">Zo snel mogelijk</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 3-6 maanden" id="r3-2" /><Label htmlFor="r3-2" className="font-normal">Binnen 3–6 maanden</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 6-12 maanden" id="r3-3" /><Label htmlFor="r3-3" className="font-normal">Binnen 6–12 maanden</Label></div>
-                            <div className="flex items-center space-x-2"><RadioGroupItem value="Tijdslijn nog onbekend" id="r3-4" /><Label htmlFor="r3-4" className="font-normal">Tijdslijn nog onbekend</Label></div>
-                        </RadioGroup>
-                    </div>
-                     <div className='space-y-3'>
-                        <Label htmlFor="wishes">Heeft u aanvullende wensen of vragen?</Label>
-                        <Textarea id="wishes" placeholder="Laat hier uw bericht achter..." value={additionalWishes} onChange={(e) => setAdditionalWishes(e.target.value)} />
-                    </div>
-                    <p className="text-xs text-muted-foreground">Wij gebruiken deze informatie uitsluitend om u zo goed mogelijk te informeren. Uw gegevens worden niet gedeeld met derden.</p>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+                    {error && <p className="col-span-4 text-sm font-medium text-destructive text-center">{error}</p>}
+                    
+                    <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                        <AccordionTrigger className='text-base'>Uw wensen (optioneel)</AccordionTrigger>
+                        <AccordionContent className="p-4 pt-4 pb-2">
+                        <div className="space-y-6">
+                            <div className='space-y-3'>
+                                <Label>Voor hoeveel huisjes heeft u interesse?</Label>
+                                <RadioGroup value={interestCount} onValueChange={setInterestCount} className='gap-2'>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="1" id="r1-1" /><Label htmlFor="r1-1" className="font-normal">1</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="2-5" id="r1-2" /><Label htmlFor="r1-2" className="font-normal">2–5</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="5+" id="r1-3" /><Label htmlFor="r1-3" className="font-normal">5+</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Nog niet zeker" id="r1-4" /><Label htmlFor="r1-4" className="font-normal">Nog niet zeker</Label></div>
+                                </RadioGroup>
+                            </div>
+                            <div className='space-y-3'>
+                                <Label>Heeft u al een locatie waar het huisje/de huisjes geplaatst kunnen worden?</Label>
+                                <RadioGroup value={hasLocation} onValueChange={setHasLocation} className='gap-2'>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Ja" id="r2-1" /><Label htmlFor="r2-1" className="font-normal">Ja</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Nee" id="r2-2" /><Label htmlFor="r2-2" className="font-normal">Nee</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Ik ben mij nog aan het oriënteren" id="r2-3" /><Label htmlFor="r2-3" className="font-normal">Ik ben mij nog aan het oriënteren</Label></div>
+                                </RadioGroup>
+                            </div>
+                            <div className='space-y-3'>
+                                <Label>Wanneer zou u het huisje idealiter willen realiseren?</Label>
+                                <RadioGroup value={timeline} onValueChange={setTimeline} className='gap-2'>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Zo snel mogelijk" id="r3-1" /><Label htmlFor="r3-1" className="font-normal">Zo snel mogelijk</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 3-6 maanden" id="r3-2" /><Label htmlFor="r3-2" className="font-normal">Binnen 3–6 maanden</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 6-12 maanden" id="r3-3" /><Label htmlFor="r3-3" className="font-normal">Binnen 6–12 maanden</Label></div>
+                                    <div className="flex items-center space-x-2"><RadioGroupItem value="Tijdslijn nog onbekend" id="r3-4" /><Label htmlFor="r3-4" className="font-normal">Tijdslijn nog onbekend</Label></div>
+                                </RadioGroup>
+                            </div>
+                            <div className='space-y-3'>
+                                <Label htmlFor="wishes">Heeft u aanvullende wensen of vragen?</Label>
+                                <Textarea id="wishes" placeholder="Laat hier uw bericht achter..." value={additionalWishes} onChange={(e) => setAdditionalWishes(e.target.value)} />
+                            </div>
+                            <p className="text-xs text-muted-foreground">Wij gebruiken deze informatie uitsluitend om u zo goed mogelijk te informeren. Uw gegevens worden niet gedeeld met derden.</p>
+                        </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                    </Accordion>
 
-            <Button type="submit" disabled={pending} className="w-full">
-              {pending ? "Verzenden..." : "Verstuur en ontvang brochure"}
-            </Button>
-          </form>
-        </ScrollArea>
+                    <div className="pt-2">
+                        <Button type="submit" disabled={pending} className="w-full">
+                        {pending ? "Verzenden..." : "Verstuur en ontvang brochure"}
+                        </Button>
+                    </div>
+                </form>
+            </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );
