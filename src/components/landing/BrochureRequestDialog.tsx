@@ -105,7 +105,7 @@ export function BrochureRequestDialog() {
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-0">
+        <DialogHeader className="p-6 pb-0 shrink-0">
           <DialogTitle className="font-headline text-2xl text-primary">
             Ontvang de Brochure
           </DialogTitle>
@@ -114,8 +114,8 @@ export function BrochureRequestDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-grow overflow-y-auto">
-            <div className="px-6 py-4">
+        <ScrollArea className="flex-1">
+            <div className="px-6 py-4 pb-6">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-3">
                         <Label>Taal / Language *</Label>
