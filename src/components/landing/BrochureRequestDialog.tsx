@@ -28,7 +28,6 @@ export function BrochureRequestDialog() {
   // State for optional fields
   const [interestCount, setInterestCount] = useState<string>();
   const [hasLocation, setHasLocation] = useState<string>();
-  const [timeline, setTimeline] = useState<string>();
   const [additionalWishes, setAdditionalWishes] = useState('');
 
   const { toast } = useToast();
@@ -43,7 +42,6 @@ export function BrochureRequestDialog() {
         setError('');
         setInterestCount(undefined);
         setHasLocation(undefined);
-        setTimeline(undefined);
         setAdditionalWishes('');
       }, 300);
     }
@@ -67,7 +65,6 @@ export function BrochureRequestDialog() {
     formData.append('_subject', 'Nieuwe brochure aanvraag');
     formData.append('Aantal huisjes interesse', interestCount || 'Niet ingevuld');
     formData.append('Al een locatie', hasLocation || 'Niet ingevuld');
-    formData.append('Realisatie termijn', timeline || 'Niet ingevuld');
     formData.append('Aanvullende wensen', additionalWishes || 'Niet ingevuld');
 
     try {
@@ -161,15 +158,6 @@ export function BrochureRequestDialog() {
                                         <div className="flex items-center space-x-2"><RadioGroupItem value="Ja" id="r2-1" /><Label htmlFor="r2-1" className="font-normal">Ja</Label></div>
                                         <div className="flex items-center space-x-2"><RadioGroupItem value="Nee" id="r2-2" /><Label htmlFor="r2-2" className="font-normal">Nee</Label></div>
                                         <div className="flex items-center space-x-2"><RadioGroupItem value="Ik ben mij nog aan het oriënteren" id="r2-3" /><Label htmlFor="r2-3" className="font-normal">Ik ben mij nog aan het oriënteren</Label></div>
-                                    </RadioGroup>
-                                </div>
-                                <div className='space-y-3'>
-                                    <Label>Wanneer zou u het huisje idealiter willen realiseren?</Label>
-                                    <RadioGroup value={timeline} onValueChange={setTimeline} className='gap-2'>
-                                        <div className="flex items-center space-x-2"><RadioGroupItem value="Zo snel mogelijk" id="r3-1" /><Label htmlFor="r3-1" className="font-normal">Zo snel mogelijk</Label></div>
-                                        <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 3-6 maanden" id="r3-2" /><Label htmlFor="r3-2" className="font-normal">Binnen 3–6 maanden</Label></div>
-                                        <div className="flex items-center space-x-2"><RadioGroupItem value="Binnen 6-12 maanden" id="r3-3" /><Label htmlFor="r3-3" className="font-normal">Binnen 6–12 maanden</Label></div>
-                                        <div className="flex items-center space-x-2"><RadioGroupItem value="Tijdslijn nog onbekend" id="r3-4" /><Label htmlFor="r3-4" className="font-normal">Tijdslijn nog onbekend</Label></div>
                                     </RadioGroup>
                                 </div>
                                 <div className='space-y-3'>
