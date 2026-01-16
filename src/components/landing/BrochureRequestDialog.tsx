@@ -101,7 +101,7 @@ export function BrochureRequestDialog() {
           Brochure
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md max-h-[90vh] flex flex-col p-0">
+      <DialogContent className="sm:max-w-md h-[90vh] max-h-[90vh] flex flex-col p-0">
         <DialogHeader className="p-6 pb-4 shrink-0">
           <DialogTitle className="font-headline text-2xl text-primary">
             Ontvang de Brochure
@@ -111,7 +111,7 @@ export function BrochureRequestDialog() {
           </DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 px-6">
+        <ScrollArea className="flex-1 min-h-0 px-6">
             <div className="pb-6">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-3">
