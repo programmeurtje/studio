@@ -6,7 +6,6 @@ import { models, type Model } from '@/lib/models';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
-import { VideoCard } from './VideoCard';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Separator } from '@/components/ui/separator';
@@ -31,7 +30,13 @@ export function ModelsSection() {
             {models.map((model) => (
               <Card key={model.id} className="flex flex-col overflow-hidden border-primary/20 hover:border-primary hover:shadow-xl transition-all duration-300">
                 <div className="relative aspect-[4/3] w-full">
-                  <VideoCard src={model.videoUrl} poster={model.posterUrl} className="w-full h-full object-cover" />
+                  <Image
+                    src={model.images[0].imageUrl}
+                    alt={model.images[0].description}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
                 <CardHeader>
                   <CardTitle className="font-headline text-2xl text-foreground">{model.name}</CardTitle>
@@ -69,16 +74,13 @@ export function ModelsSection() {
                 <DialogDescription>{selectedModel.positioning}</DialogDescription>
               </DialogHeader>
               <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4 overflow-y-auto px-6 pb-6 min-h-0">
-                 <div className="space-y-4">
-                    <div className="relative aspect-video w-full rounded-lg overflow-hidden ring-1 ring-black/10">
-                       <video src={selectedModel.videoUrl} poster={selectedModel.posterUrl} className="w-full h-full object-cover" controls autoPlay muted loop playsInline/>
-                    </div>
+                 <div className="flex flex-col justify-center">
                     <Carousel className="w-full">
                       <CarouselContent>
                         {selectedModel.images.map((img) => (
-                          <CarouselItem key={img.id} className="basis-1/2 md:basis-1/3">
-                            <div className="relative aspect-square">
-                              <Image src={img.imageUrl} alt={img.description} fill className="object-cover rounded-md" sizes="(max-width: 768px) 50vw, 33vw"/>
+                          <CarouselItem key={img.id}>
+                            <div className="relative aspect-video">
+                              <Image src={img.imageUrl} alt={img.description} fill className="object-cover rounded-md" sizes="(max-width: 1280px) 45vw, 95vw"/>
                             </div>
                           </CarouselItem>
                         ))}
@@ -105,9 +107,9 @@ export function ModelsSection() {
                     </div>
                     <div className="flex flex-col sm:flex-row gap-2 pt-2">
                         <Button asChild size="lg" className="flex-1"><a href="#contact">Contact opnemen</a></Button>
-                        <Dialog>
-                            <Button asChild variant="outline" size="lg" className="flex-1"><BrochureRequestDialog /></Button>
-                        </Dialog>
+                        <BrochureRequestDialog>
+                          <Button variant="outline" size="lg" className="flex-1">Brochure</Button>
+                        </BrochureRequestDialog>
                     </div>
                  </div>
               </div>

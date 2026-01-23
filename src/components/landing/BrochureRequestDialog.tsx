@@ -18,7 +18,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '../ui/scroll-area';
 
-export function BrochureRequestDialog() {
+export function BrochureRequestDialog({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [language, setLanguage] = useState('Nederlands');
@@ -97,9 +97,11 @@ export function BrochureRequestDialog() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <button className="font-headline font-bold text-lg text-primary transition-opacity hover:opacity-80">
-          Brochure
-        </button>
+        {children || (
+          <button className="font-headline font-bold text-lg text-primary transition-opacity hover:opacity-80">
+            Brochure
+          </button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md h-[90vh] max-h-[90vh] flex flex-col p-0">
         <DialogHeader className="p-6 pb-4 shrink-0">
