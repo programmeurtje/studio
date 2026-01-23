@@ -3,7 +3,7 @@
 import { Header } from '@/components/landing/Header';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { ValuePropositionSection } from '@/components/landing/ValuePropositionSection';
-import { GallerySection } from '@/components/landing/GallerySection';
+import { ModelsSection } from '@/components/landing/ModelsSection';
 import { OpenHouseSection } from '@/components/landing/OpenHouseSection';
 import { ContactSection } from '@/components/landing/ContactSection';
 import { Footer } from '@/components/landing/Footer';
@@ -19,7 +19,7 @@ export default function Home() {
           <ValuePropositionSection />
         </FadeIn>
         <FadeIn>
-          <GallerySection />
+          <ModelsSection />
         </FadeIn>
         <OpenHouseSection />
         <FadeIn>

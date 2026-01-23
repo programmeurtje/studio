@@ -15,8 +15,8 @@ const openHouseDates: OpenHouseDate[] = [
     { id: '1', month: 'November 2025', days: 'Vrijdag 31 oktober & Zaterdag 1 november' },
     { id: '2', month: 'December 2025', days: 'Vrijdag 5 december & Zaterdag 6 december' },
     { id: '3', month: 'Januari 2026', days: 'Vrijdag 2 januari & Zaterdag 3 januari' },
-    { id: '4', month: 'Februari 2026', days: 'Vrijdag 6 februari & Zaterdag 7 februari' },
-    { id: '5', month: 'Maart 2026', days: 'Vrijdag 6 maart & Zaterdag 7 maart' },
+    { id: '4', month: 'Februari 2026', days: 'Zaterdag 7 februari' },
+    { id: '5', month: 'Maart 2026', days: 'Zaterdag 7 maart' },
     { id: '6', month: 'April 2026', days: 'Vrijdag 3 april & Zaterdag 4 april' },
 ];
 
