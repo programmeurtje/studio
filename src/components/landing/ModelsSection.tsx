@@ -74,7 +74,7 @@ export function ModelsSection() {
       </section>
 
       <Dialog open={!!selectedModel} onOpenChange={(isOpen) => !isOpen && setSelectedModel(null)}>
-        <DialogContent className="max-w-5xl w-[95vw] h-[90vh] flex flex-col p-0">
+        <DialogContent className="max-w-5xl w-[95vw] max-h-[90vh] flex flex-col p-0">
           {selectedModel && (
             <>
               <DialogHeader className="p-6 pb-2 shrink-0">
