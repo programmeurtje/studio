@@ -82,7 +82,7 @@ export function ModelsSection() {
                 <DialogDescription>{selectedModel.positioning}</DialogDescription>
               </DialogHeader>
               <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4 overflow-y-auto px-6 pb-6 min-h-0">
-                 <div className="flex flex-col justify-center">
+                 <div className="flex flex-col">
                     <Carousel className="w-full">
                       <CarouselContent>
                         {selectedModel.images.map((img) => (
