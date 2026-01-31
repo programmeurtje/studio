@@ -14,6 +14,14 @@ import { BrochureRequestDialog } from './BrochureRequestDialog';
 export function ModelsSection() {
   const [selectedModel, setSelectedModel] = useState<Model | null>(null);
 
+  const handleContactClick = () => {
+    setSelectedModel(null);
+    // Timeout to allow the dialog to close before scrolling
+    setTimeout(() => {
+      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
   return (
     <>
       <section id="modellen" className="py-20 sm:py-32 bg-primary/5">
@@ -73,7 +81,7 @@ export function ModelsSection() {
                 <DialogTitle className="font-headline text-3xl text-primary">{selectedModel.name}</DialogTitle>
                 <DialogDescription>{selectedModel.positioning}</DialogDescription>
               </DialogHeader>
-              <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4 overflow-y-auto px-6 pb-6 min-h-0">
+              <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-4 overflow-y-auto px-6 pb-6 min-h-0">
                  <div className="flex flex-col justify-center">
                     <Carousel className="w-full">
                       <CarouselContent>
@@ -89,27 +97,30 @@ export function ModelsSection() {
                       <CarouselNext className="-right-2" />
                     </Carousel>
                  </div>
-                 <div className="space-y-4 flex flex-col">
-                    <h3 className="font-headline text-xl text-foreground">Specificaties</h3>
-                    <ul className="space-y-2 text-muted-foreground">
-                        {selectedModel.specs.map((spec) => (
-                          <li key={spec} className="flex items-start">
-                            <Check className="h-5 w-5 text-primary mr-2 flex-shrink-0 mt-0.5" />
-                            <span>{spec}</span>
-                          </li>
-                        ))}
-                    </ul>
-                    <div className="flex-grow" />
-                    <Separator />
-                    <div className="w-full text-left">
-                        <p className="text-xl font-bold text-foreground">{selectedModel.price}</p>
-                        {selectedModel.priceSubtext && <p className="text-sm text-muted-foreground">{selectedModel.priceSubtext}</p>}
+                 <div className="flex flex-col">
+                    <div>
+                        <h3 className="font-headline text-xl text-foreground">Specificaties</h3>
+                        <ul className="space-y-2 text-muted-foreground mt-4">
+                            {selectedModel.specs.map((spec) => (
+                              <li key={spec} className="flex items-start">
+                                <Check className="h-5 w-5 text-primary mr-2 flex-shrink-0 mt-0.5" />
+                                <span>{spec}</span>
+                              </li>
+                            ))}
+                        </ul>
                     </div>
-                    <div className="flex flex-col sm:flex-row gap-2 pt-2">
-                        <Button asChild size="lg" className="flex-1"><a href="#contact">Contact opnemen</a></Button>
-                        <BrochureRequestDialog>
-                          <Button variant="outline" size="lg" className="flex-1">Brochure</Button>
-                        </BrochureRequestDialog>
+                    <div className="mt-auto space-y-4 pt-6">
+                        <Separator />
+                        <div className="w-full text-left">
+                            <p className="text-xl font-bold text-foreground">{selectedModel.price}</p>
+                            {selectedModel.priceSubtext && <p className="text-sm text-muted-foreground">{selectedModel.priceSubtext}</p>}
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                            <Button size="lg" className="flex-1" onClick={handleContactClick}>Contact opnemen</Button>
+                            <BrochureRequestDialog>
+                              <Button variant="outline" size="lg" className="flex-1">Brochure</Button>
+                            </BrochureRequestDialog>
+                        </div>
                     </div>
                  </div>
               </div>
